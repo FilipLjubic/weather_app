@@ -5,6 +5,7 @@ import 'package:weather_icons/weather_icons.dart';
 ///       - make rich text ouf of some texts
 ///       - change font of tomorrow weather container and appbar
 ///       - add elipses on 2 edges
+///       - make 7 text column into cards or give them elevation
 
 class FutureDays extends StatelessWidget {
   @override
