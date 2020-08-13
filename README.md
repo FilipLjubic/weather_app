@@ -8,14 +8,14 @@ How to carry out time consuming tasks such as getting device location and networ
 
 ## What I will create
 
-I'm going to make a weather app inspired by the beautiful designs made by [Olia Gozha](https://dribbble.com/shots/4663154-).
+I'm going to make a weather app inspired by the beautiful designs made by [Angelina Skiba](https://dribbble.com/Bebachka_a) and [Mahdi Hajinejad](https://dribbble.com/shots/11113434-Weather-App).
 
-![Finished App](https://github.com/londonappbrewery/Images/blob/master/clima-demo.gif)
+
+## Figma of screens
+![Figma of first screen](https://github.com/FilipLjubic/weather_app/blob/master/images/figma1.png)
 ![Figma of second screen](https://github.com/FilipLjubic/weather_app/blob/master/images/figma2.png)
 
 
 
->This is a companion project to The App Brewery's Complete Flutter Development Bootcamp, check out the full course at [www.appbrewery.co](https://www.appbrewery.co/)
 
-![End Banner](https://github.com/londonappbrewery/Images/blob/master/readme-end-banner.png)
 
