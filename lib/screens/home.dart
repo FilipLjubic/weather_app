@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/screens/future_days.dart';
+import 'future_days.dart';
 
 /// TODO: - fix search bar
 ///       - fix draggablescrollview
@@ -32,7 +34,13 @@ class Home extends StatelessWidget {
                 controller: scrollController,
                 itemCount: 5,
                 itemBuilder: (context, index) => ListTile(
-                  title: Text("Item $index"),
+                  title: GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => FutureDays()),
+                    ),
+                    child: Text("Item $index"),
+                  ),
                 ),
               ),
               decoration: BoxDecoration(
