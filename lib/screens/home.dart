@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+/// TODO: - fix search bar
+///       - fix draggablescrollview
+///       - make it beautiful
+///       - add animations
+
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
