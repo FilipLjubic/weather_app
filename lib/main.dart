@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Weather Forecast Application',
       debugShowCheckedModeBanner: false,
-      home: FutureDays(),
+      home: Home(),
     );
   }
 }
