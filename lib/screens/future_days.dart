@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:weather_icons/weather_icons.dart';
 
 class FutureDays extends StatelessWidget {
   @override
@@ -40,7 +40,7 @@ class FutureDays extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
-                          fontSize: 30.0,
+                          fontSize: 26.0,
                         ),
                       ),
                       Text(
@@ -56,66 +56,116 @@ class FutureDays extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListTile(
-                    leading: FaIcon(FontAwesomeIcons.cloudSunRain, size: 50.0),
+                    leading: BoxedIcon(
+                      WeatherIcons.day_sunny_overcast,
+                      size: 49.0,
+                    ),
                     title: Text(
                       "20/17 °C",
                       style: TextStyle(
-                        fontSize: 30.0,
+                        fontSize: 35.0,
+                        fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
                     subtitle: Text(
-                      "sunny",
+                      "Sunny",
                       style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 16.0,
+                        color: Colors.grey[800],
+                        fontSize: 20.0,
                       ),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 20.0),
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Column(
                         children: [
                           Container(
-                            padding: EdgeInsets.all(6.0),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: Colors.green[50],
                               borderRadius: BorderRadius.circular(10.0),
                             ),
-                            child: FaIcon(FontAwesomeIcons.wind,
-                                color: Colors.green),
+                            child: BoxedIcon(
+                              WeatherIcons.strong_wind,
+                              size: 30.0,
+                              color: Colors.green,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10.0,
                           ),
                           Text(
                             "4 km/h",
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),
                       Column(
                         children: [
-                          FaIcon(FontAwesomeIcons.wind, color: Colors.white),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.blue[50],
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: BoxedIcon(WeatherIcons.humidity,
+                                size: 30.0, color: Colors.blue),
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
                           Text(
-                            "4 km/h",
-                            style: TextStyle(color: Colors.white),
+                            "43%",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),
                       Column(
                         children: [
-                          FaIcon(FontAwesomeIcons.wind, color: Colors.white),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.red[50],
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: BoxedIcon(
+                              WeatherIcons.raindrops,
+                              size: 30.0,
+                              color: Colors.red,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
                           Text(
-                            "4 km/h",
-                            style: TextStyle(color: Colors.white),
+                            "25%",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),
                     ],
                   ),
-                )
+                ),
+                Container(
+                    margin: EdgeInsets.only(right: 10.0, bottom: 6.0),
+                    alignment: Alignment.bottomRight,
+                    child: Text("Zagreb, Hrvatska",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.bold,
+                        ))),
               ],
             ),
           ),
