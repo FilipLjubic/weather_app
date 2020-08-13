@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:weather_icons/weather_icons.dart';
 
+/// TODO: - change fonts,
+///       - make rich text ouf of some texts
+///       - change font of tomorrow weather container and appbar
+///       - add elipses on 2 edges
+
 class FutureDays extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 1.0,
         backgroundColor: Colors.white,
         title: Text(
-          "Zagreb, Croatia",
-          style: TextStyle(color: Colors.grey[800]),
+          "Next 7 days",
+          style: TextStyle(
+            color: Colors.grey[500],
+            fontSize: 30.0,
+          ),
         ),
         centerTitle: true,
       ),
@@ -17,6 +26,7 @@ class FutureDays extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // container of tomorrows weather
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 30.0),
             decoration: BoxDecoration(
@@ -24,7 +34,7 @@ class FutureDays extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.bottomLeft,
                 end: Alignment.topCenter,
-                colors: [Colors.white, Color(0xFF1487DA)],
+                colors: [Colors.blue[50], Color(0xFF1487DA)],
               ),
             ),
             child: Column(
@@ -158,17 +168,209 @@ class FutureDays extends StatelessWidget {
                   ),
                 ),
                 Container(
-                    margin: EdgeInsets.only(right: 10.0, bottom: 6.0),
-                    alignment: Alignment.bottomRight,
-                    child: Text("Zagreb, Hrvatska",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.bold,
-                        ))),
+                  margin: EdgeInsets.only(right: 10.0, bottom: 6.0),
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                    "Zagreb, Hrvatska",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
+
+          // column of next 7 days
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    "mon",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                  Text(
+                    "17/15°",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      BoxedIcon(WeatherIcons.day_cloudy),
+                      SizedBox(width: 5.0),
+                      Text("Cloudy"),
+                    ],
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    "mon",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                  Text(
+                    "17/15°",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      BoxedIcon(WeatherIcons.day_cloudy),
+                      SizedBox(width: 5.0),
+                      Text("Cloudy"),
+                    ],
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    "mon",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                  Text(
+                    "17/15°",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      BoxedIcon(WeatherIcons.day_cloudy),
+                      SizedBox(width: 5.0),
+                      Text("Cloudy"),
+                    ],
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    "mon",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                  Text(
+                    "17/15°",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      BoxedIcon(WeatherIcons.day_cloudy),
+                      SizedBox(width: 5.0),
+                      Text("Cloudy"),
+                    ],
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    "mon",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                  Text(
+                    "17/15°",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      BoxedIcon(WeatherIcons.day_cloudy),
+                      SizedBox(width: 5.0),
+                      Text("Cloudy"),
+                    ],
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    "mon",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                  Text(
+                    "17/15°",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      BoxedIcon(WeatherIcons.day_cloudy),
+                      SizedBox(width: 5.0),
+                      Text("Cloudy"),
+                    ],
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    "mon",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                  Text(
+                    "17/15°",
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      BoxedIcon(WeatherIcons.day_cloudy),
+                      SizedBox(width: 5.0),
+                      Text("Cloudy"),
+                    ],
+                  )
+                ],
+              ),
+            ],
+          )
         ],
       ),
     );
