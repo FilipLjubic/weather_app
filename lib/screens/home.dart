@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/screens/future_days.dart';
+import 'package:weather_app/widgets/current_weather_card.dart';
 
-/// TODO: - fix search bar
-///       - fix draggablescrollview
+/// TODO: - fix draggablescrollview
 ///       - make it beautiful
 ///       - add animations
+///
+///       - posto sam poceo strugglat sa designom idem odrediti sta ce zapravo aplikacija imati
+/// imati ce: - hourly forecast 48 sati
+///           - wind km/h, humidity %, rain mm (staviti u card u ikonice ispod svega)
+///           - forecast sljedeceg tjedna na drugom screenu - min/max, ikonica i main
+///           - refresh kad scrollas gore
+///           - search sa suggestionima za autocomplete
+///           - speech to text mic opcija
 
 class Home extends StatelessWidget {
   @override
@@ -54,10 +62,10 @@ class Home extends StatelessWidget {
                     // make it shine while its being held
                     trailing: IconButton(
                       icon: const Icon(
-                        Icons.mic,
+                        Icons.settings,
                         color: Colors.black54,
                       ),
-                      onPressed: () => print("mic"),
+                      onPressed: () => print("settings"),
                     ),
                   ),
                 ),
@@ -80,53 +88,15 @@ class Home extends StatelessWidget {
                       indent: MediaQuery.of(context).size.width / 3,
                       color: Colors.black12,
                     ),
-                    Card(
-                      elevation: 2.0,
-                      shadowColor: Colors.black45,
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 20.0),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 10.0),
-                        leading: Icon(
-                          Icons.wb_sunny,
-                          size: 50.0,
-                        ),
-                        title: Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "It's",
-                                style: TextStyle(fontSize: 15.0),
-                              ),
-                              Text(
-                                "Sunny",
-                                style: TextStyle(fontSize: 22.0),
-                              ),
-                              Text(
-                                "now",
-                                style: TextStyle(fontSize: 15.0),
-                              ),
-                            ],
-                          ),
-                        ),
-                        trailing: RichText(
-                          text: TextSpan(
-                            text: '20 ',
-                            style:
-                                TextStyle(fontSize: 25.0, color: Colors.black),
-                            children: [
-                              TextSpan(
-                                text: "°C",
-                                style: TextStyle(
-                                  fontSize: 13.0,
-                                  color: Colors.black26,
-                                ),
-                              ),
-                            ],
-                          ),
+                    CurrentWeatherCard(),
+                    Container(
+                      margin: const EdgeInsets.only(left: 26.0),
+                      child: Text(
+                        "TODAY",
+                        style: TextStyle(
+                          color: Colors.black26,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
