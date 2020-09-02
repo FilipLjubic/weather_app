@@ -7,8 +7,9 @@ import 'package:weather_app/widgets/current_weather_card.dart';
 ///       - add animations
 ///
 ///       - posto sam poceo strugglat sa designom idem odrediti sta ce zapravo aplikacija imati
-/// imati ce: - hourly forecast 48 sati
+/// imati ce:
 ///           - wind km/h, humidity %, rain mm (staviti u card u ikonice ispod svega)
+///           - hourly forecast 24 sata - kartice s vremenom, ikonicom i stupnjevima, on select bude obojano okolo
 ///           - forecast sljedeceg tjedna na drugom screenu - min/max, ikonica i main
 ///           - refresh kad scrollas gore
 ///           - search sa suggestionima za autocomplete
