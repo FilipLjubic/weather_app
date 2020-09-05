@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/screens/future_days.dart';
 import 'package:weather_app/widgets/current_weather_card.dart';
+import 'package:weather_app/widgets/floating_search_bar.dart';
 
 /// TODO: - fix draggablescrollview
 ///       - make it beautiful
@@ -34,44 +35,8 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
-                child: Card(
-                  elevation: 5.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  color: const Color(0x99D2F6FF).withOpacity(0.55),
-                  child: ListTile(
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 30.0),
-                    leading: const Icon(
-                      Icons.location_on,
-                      color: Colors.black54,
-                    ),
-                    title: TextField(
-                      keyboardType: TextInputType.text,
-                      textInputAction: TextInputAction.go,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        // set to current location
-                        hintText: "Enter a location",
-                      ),
-                    ),
-                    // make it shine while its being held
-                    trailing: IconButton(
-                      icon: const Icon(
-                        Icons.settings,
-                        color: Colors.black54,
-                      ),
-                      onPressed: () => print("settings"),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // floating search bar
+            FloatingSearchBar(),
             DraggableScrollableSheet(
               maxChildSize: 0.5,
               minChildSize: 0.2,
