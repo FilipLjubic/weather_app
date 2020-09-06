@@ -152,9 +152,16 @@ class MiddleCardRow extends StatelessWidget {
             fontFamily: "Montserrat",
           ),
         ),
-        Icon(
-          Icons.wb_sunny,
-          size: 25.0,
+        Container(
+          padding: const EdgeInsets.all(4.0),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.black12,
+          ),
+          child: Icon(
+            Icons.wb_sunny,
+            size: 25.0,
+          ),
         ),
         Text(
           "Min: 20°",
