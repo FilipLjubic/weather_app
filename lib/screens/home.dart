@@ -4,7 +4,9 @@ import 'package:weather_app/widgets/floating_search_bar.dart';
 import 'package:weather_icons/weather_icons.dart';
 
 /// TODO: - make it beautiful
-///       - add animations
+///       - add animations - staggered animations na horizontalni list view
+///                        - animations package - za searchbar Container transform
+///                                             - fadethrough za refresh
 ///
 ///       - posto sam poceo strugglat sa designom idem odrediti sta ce zapravo aplikacija imati
 /// imati ce:
@@ -16,6 +18,7 @@ import 'package:weather_icons/weather_icons.dart';
 ///           - settings :- celsius / fahrenheit
 ///                       - forecast update period
 ///                       - add locations - da naucim system preferences
+///                       - snackbar/toast - flutter styled toast
 ///           - napravit da ne moze biti u portrait landscape modeu
 
 class Home extends StatelessWidget {
@@ -37,8 +40,10 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
+
             // floating search bar
             FloatingSearchBar(),
+
             DraggableScrollableSheet(
               maxChildSize: 0.6,
               minChildSize: 0.25,
@@ -46,6 +51,7 @@ class Home extends StatelessWidget {
               builder: (context, scrollController) => Container(
                 child: ListView(
                   controller: scrollController,
+                  physics: BouncingScrollPhysics(),
                   children: [
                     const SizedBox(
                       height: 10.0,

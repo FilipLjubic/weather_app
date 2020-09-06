@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:number_slide_animation/number_slide_animation_widget.dart';
 import 'package:weather_app/widgets/current_time.dart';
 import 'package:weather_app/widgets/round_property_icon.dart';
 import 'package:weather_icons/weather_icons.dart';
@@ -107,13 +108,15 @@ class _UpperCardRowState extends State<UpperCardRow> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              '20',
-              style: TextStyle(
+            NumberSlideAnimation(
+              number: '21',
+              textStyle: TextStyle(
                 fontSize: 50.0,
                 color: Colors.black87,
                 fontFamily: "Montserrat",
               ),
+              duration: const Duration(milliseconds: 1500),
+              curve: Curves.bounceIn,
             ),
             Text(
               "°C",
