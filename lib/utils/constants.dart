@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:weather_app/widgets/current_time.dart';
 import 'package:weather_app/widgets/round_property_icon.dart';
@@ -77,15 +79,27 @@ class IconsRow extends StatelessWidget {
   }
 }
 
-class UpperCardRow extends StatelessWidget {
-  const UpperCardRow({
-    @required this.currentTime,
-  });
+class UpperCardRow extends StatefulWidget {
+  @override
+  _UpperCardRowState createState() => _UpperCardRowState();
+}
 
-  final DateTime currentTime;
+class _UpperCardRowState extends State<UpperCardRow> {
+  DateTime currentTime;
+
+  @override
+  void initState() {
+    super.initState();
+    currentTime = DateTime.now();
+  }
 
   @override
   Widget build(BuildContext context) {
+    Timer.periodic(Duration(seconds: 5), (_) {
+      setState(() {
+        currentTime = DateTime.now();
+      });
+    });
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

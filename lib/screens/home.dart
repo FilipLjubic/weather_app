@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/screens/future_days.dart';
 import 'package:weather_app/widgets/current_weather_card.dart';
 import 'package:weather_app/widgets/floating_search_bar.dart';
 
-/// TODO: - fix draggablescrollview
-///       - make it beautiful
+/// TODO: - make it beautiful
 ///       - add animations
 ///
 ///       - posto sam poceo strugglat sa designom idem odrediti sta ce zapravo aplikacija imati
 /// imati ce:
-///           - wind km/h, humidity %, rain mm (staviti u card u ikonice ispod svega)
 ///           - hourly forecast 24 sata - kartice s vremenom, ikonicom i stupnjevima, on select bude obojano okolo
 ///           - forecast sljedeceg tjedna na drugom screenu - min/max, ikonica i main
 ///           - refresh kad scrollas gore
 ///           - search sa suggestionima za autocomplete
 ///           - speech to text mic opcija
+///           - settings :- celsius / fahrenheit
+///                       - forecast update period
+///                       - add locations - da naucim system preferences
 
 class Home extends StatelessWidget {
   @override
@@ -38,8 +38,8 @@ class Home extends StatelessWidget {
             // floating search bar
             FloatingSearchBar(),
             DraggableScrollableSheet(
-              maxChildSize: 0.5,
-              minChildSize: 0.2,
+              maxChildSize: 0.6,
+              minChildSize: 0.25,
               initialChildSize: 0.3,
               builder: (context, scrollController) => Container(
                 child: ListView(
@@ -49,7 +49,7 @@ class Home extends StatelessWidget {
                       height: 10.0,
                     ),
                     Divider(
-                      thickness: 3.0,
+                      thickness: 2.0,
                       endIndent: MediaQuery.of(context).size.width / 3,
                       indent: MediaQuery.of(context).size.width / 3,
                       color: Colors.black12,
@@ -63,6 +63,7 @@ class Home extends StatelessWidget {
                           color: Colors.black26,
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
+                          fontFamily: "Montserrat",
                         ),
                       ),
                     ),

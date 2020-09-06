@@ -14,7 +14,7 @@ class CurrentWeatherCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 15.0),
         child: Column(
           children: [
-            UpperCardRow(currentTime: currentTime),
+            UpperCardRow(),
             Divider(
               endIndent: MediaQuery.of(context).size.width / 10,
               indent: MediaQuery.of(context).size.width / 10,
