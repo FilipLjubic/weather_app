@@ -22,10 +22,16 @@ class FloatingSearchBar extends StatelessWidget {
             title: TextField(
               keyboardType: TextInputType.text,
               textInputAction: TextInputAction.go,
+              style: TextStyle(
+                fontFamily: "Montserrat",
+              ),
               decoration: InputDecoration(
                 border: InputBorder.none,
                 // set to current location
                 hintText: "Enter a location",
+                hintStyle: TextStyle(
+                  fontFamily: "Montserrat",
+                ),
               ),
             ),
             // make it shine while its being held
