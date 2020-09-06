@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/widgets/current_weather_card.dart';
 import 'package:weather_app/widgets/floating_search_bar.dart';
+import 'package:weather_icons/weather_icons.dart';
 
 /// TODO: - make it beautiful
 ///       - add animations
@@ -15,6 +16,7 @@ import 'package:weather_app/widgets/floating_search_bar.dart';
 ///           - settings :- celsius / fahrenheit
 ///                       - forecast update period
 ///                       - add locations - da naucim system preferences
+///           - napravit da ne moze biti u portrait landscape modeu
 
 class Home extends StatelessWidget {
   @override
@@ -67,14 +69,44 @@ class Home extends StatelessWidget {
                         ),
                       ),
                     ),
+                    Container(
+                      height: 100.0,
+                      margin: const EdgeInsets.all(10.0),
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          Material(
+                            elevation: 2.0,
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Container(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("11:00"),
+                                  const SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  BoxedIcon(WeatherIcons.day_sunny_overcast),
+                                  const SizedBox(
+                                    height: 10.0,
+                                  ),
+                                  Text("20°")
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
+                    topLeft: Radius.circular(40.0),
+                    topRight: Radius.circular(40.0),
                   ),
                 ),
               ),
