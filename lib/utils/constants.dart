@@ -96,7 +96,7 @@ class _UpperCardRowState extends State<UpperCardRow> {
 
   @override
   Widget build(BuildContext context) {
-    Timer.periodic(Duration(seconds: 5), (_) {
+    Timer.periodic(Duration(seconds: 1), (_) {
       setState(() {
         currentTime = DateTime.now();
       });
@@ -153,10 +153,10 @@ class MiddleCardRow extends StatelessWidget {
           ),
         ),
         Container(
-          padding: const EdgeInsets.all(4.0),
+          padding: const EdgeInsets.all(6.0),
           decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.black12,
+            borderRadius: BorderRadius.circular(12.0),
+            color: Colors.grey[100],
           ),
           child: Icon(
             Icons.wb_sunny,
@@ -173,3 +173,12 @@ class MiddleCardRow extends StatelessWidget {
     );
   }
 }
+
+BoxDecoration draggableScrollableSheetDecoration = const BoxDecoration(
+  shape: BoxShape.rectangle,
+  color: Colors.white,
+  borderRadius: BorderRadius.only(
+    topLeft: Radius.circular(40.0),
+    topRight: Radius.circular(40.0),
+  ),
+);
