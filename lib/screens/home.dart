@@ -15,14 +15,7 @@ import 'package:weather_icons/weather_icons.dart';
 /// imati ce:
 ///           - hourly forecast 24 sata - kartice s vremenom, ikonicom i stupnjevima, on select bude obojano okolo
 ///           - forecast sljedeceg tjedna na drugom screenu - min/max, ikonica i main
-///           - refresh kad scrollas gore
-///           - search sa suggestionima za autocomplete - typeahead
-///           - speech to text mic opcija
-///           - settings :- celsius / fahrenheit
-///                       - forecast update period
-///                       - add locations - da naucim system preferences
-///                       - snackbar/toast - flutter styled toast
-///           - napravit da ne moze biti u portrait landscape modeu
+///           - napravit da ne moze biti u landscape modeu
 
 class Home extends StatelessWidget {
   @override

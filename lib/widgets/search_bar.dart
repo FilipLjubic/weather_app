@@ -14,9 +14,12 @@ class SearchBar extends StatelessWidget {
         color: Colors.white,
         child: ListTile(
           contentPadding: const EdgeInsets.symmetric(horizontal: 10.0),
-          leading: const Icon(
-            Icons.keyboard_backspace,
-            color: Colors.black,
+          leading: IconButton(
+            icon: Icon(
+              Icons.keyboard_backspace,
+              color: Colors.black,
+            ),
+            onPressed: () => Navigator.pop(context),
           ),
           title: TextField(
             autofocus: true,
