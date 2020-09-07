@@ -9,13 +9,14 @@ import 'package:weather_icons/weather_icons.dart';
 ///       - add animations - staggered animations na horizontalni list view
 ///                        - animations package - za searchbar Container transform
 ///                                             - fadethrough za refresh
+///                        - progress HUD za kada refresha/searcha
 ///
 ///       - posto sam poceo strugglat sa designom idem odrediti sta ce zapravo aplikacija imati
 /// imati ce:
 ///           - hourly forecast 24 sata - kartice s vremenom, ikonicom i stupnjevima, on select bude obojano okolo
 ///           - forecast sljedeceg tjedna na drugom screenu - min/max, ikonica i main
 ///           - refresh kad scrollas gore
-///           - search sa suggestionima za autocomplete
+///           - search sa suggestionima za autocomplete - typeahead
 ///           - speech to text mic opcija
 ///           - settings :- celsius / fahrenheit
 ///                       - forecast update period
@@ -28,7 +29,6 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        extendBodyBehindAppBar: true,
         resizeToAvoidBottomInset: false,
         body: Stack(
           children: [

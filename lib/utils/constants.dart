@@ -87,20 +87,27 @@ class UpperCardRow extends StatefulWidget {
 
 class _UpperCardRowState extends State<UpperCardRow> {
   DateTime currentTime;
+  Timer _timer;
 
   @override
   void initState() {
     super.initState();
     currentTime = DateTime.now();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    Timer.periodic(Duration(seconds: 1), (_) {
+    _timer = Timer.periodic(Duration(seconds: 1), (_) {
       setState(() {
         currentTime = DateTime.now();
       });
     });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
