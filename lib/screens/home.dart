@@ -7,8 +7,7 @@ import 'package:weather_icons/weather_icons.dart';
 
 /// TODO: - make it beautiful
 ///       - add animations - staggered animations na horizontalni list view
-///                        - animations package - za searchbar Container transform
-///                                             - fadethrough za refresh
+///                        - animations package - fadethrough za refresh
 ///                        - progress HUD za kada refresha/searcha
 ///
 ///       - posto sam poceo strugglat sa designom idem odrediti sta ce zapravo aplikacija imati

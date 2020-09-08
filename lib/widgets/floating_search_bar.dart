@@ -2,7 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:weather_app/screens/search.dart';
 
-class FloatingSearchBar extends StatelessWidget {
+class FloatingSearchBar extends StatefulWidget {
+  @override
+  _FloatingSearchBarState createState() => _FloatingSearchBarState();
+}
+
+class _FloatingSearchBarState extends State<FloatingSearchBar> {
+  String hintText;
+
+  @override
+  void initState() {
+    super.initState();
+    hintText = "Enter a location";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,13 +28,18 @@ class FloatingSearchBar extends StatelessWidget {
         ),
         color: const Color(0x99D2F6FF).withOpacity(0.55),
         child: GestureDetector(
-          onTap: () => Navigator.push(
-            context,
-            PageTransition(
-              type: PageTransitionType.fade,
-              child: SearchScreen(),
-            ),
-          ),
+          onTap: () async {
+            hintText = await Navigator.push(
+              context,
+              PageTransition(
+                type: PageTransitionType.fade,
+                child: SearchScreen(),
+              ),
+            );
+            if (hintText != null) {
+              setState(() {});
+            }
+          },
           behavior: HitTestBehavior.opaque,
           child: Container(
             height: 55.0,
@@ -38,7 +56,7 @@ class FloatingSearchBar extends StatelessWidget {
                     const SizedBox(
                       width: 16.0,
                     ),
-                    Text("Enter a location",
+                    Text(hintText,
                         style: TextStyle(
                             fontFamily: "Montserrat", color: Colors.black26)),
                   ],

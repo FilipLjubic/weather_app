@@ -23,30 +23,38 @@ class SearchBar extends StatelessWidget {
             ),
             onPressed: () => Navigator.pop(context),
           ),
-          title: TextField(
-            autofocus: true,
-            keyboardType: TextInputType.text,
-            textInputAction: TextInputAction.go,
-            style: TextStyle(
-              fontFamily: "Montserrat",
-            ),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              // set to current location
-              hintText: "Enter a location",
-              hintStyle: TextStyle(
-                fontFamily: "Montserrat",
-              ),
-            ),
-          ),
+          title: SearchTextField(),
           // make it shine while its being held
           trailing: IconButton(
             icon: const Icon(
               Icons.mic,
               color: Colors.black,
             ),
-            onPressed: () => print("settings"),
+            onPressed: () => print("mic"),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class SearchTextField extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      onSubmitted: (value) => Navigator.pop(context, value),
+      autofocus: true,
+      keyboardType: TextInputType.text,
+      textInputAction: TextInputAction.go,
+      style: TextStyle(
+        fontFamily: "Montserrat",
+      ),
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        // set to current location
+        hintText: "Enter a location",
+        hintStyle: TextStyle(
+          fontFamily: "Montserrat",
         ),
       ),
     );

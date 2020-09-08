@@ -31,6 +31,7 @@ dependencies:
   date_time_format: ^1.0.0+4
   number_slide_animation: ^0.1.1
   page_transition: ^1.1.6
+  flutter_typeahead: ^1.8.8
 
 dev_dependencies:
   flutter_test:
