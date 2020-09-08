@@ -30,6 +30,7 @@ dependencies:
   weather_icons: ^2.0.1
   date_time_format: ^1.0.0+4
   number_slide_animation: ^0.1.1
+  page_transition: ^1.1.6
 
 dev_dependencies:
   flutter_test:

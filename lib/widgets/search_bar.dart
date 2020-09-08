@@ -15,6 +15,8 @@ class SearchBar extends StatelessWidget {
         child: ListTile(
           contentPadding: const EdgeInsets.symmetric(horizontal: 10.0),
           leading: IconButton(
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
             icon: Icon(
               Icons.keyboard_backspace,
               color: Colors.black,

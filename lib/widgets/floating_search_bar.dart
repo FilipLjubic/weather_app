@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:weather_app/screens/search.dart';
 
 class FloatingSearchBar extends StatelessWidget {
@@ -16,14 +17,15 @@ class FloatingSearchBar extends StatelessWidget {
         child: GestureDetector(
           onTap: () => Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (_) => SearchScreen(),
+            PageTransition(
+              type: PageTransitionType.fade,
+              child: SearchScreen(),
             ),
           ),
           behavior: HitTestBehavior.opaque,
           child: Container(
-            height: 50.0,
-            margin: const EdgeInsets.symmetric(horizontal: 10.0),
+            height: 55.0,
+            margin: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -34,7 +36,7 @@ class FloatingSearchBar extends StatelessWidget {
                       color: Colors.black54,
                     ),
                     const SizedBox(
-                      width: 10.0,
+                      width: 16.0,
                     ),
                     Text("Enter a location",
                         style: TextStyle(
