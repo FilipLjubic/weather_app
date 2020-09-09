@@ -4,7 +4,9 @@ import 'package:geolocator/geolocator.dart';
 class LocationHelper {
   LocationHelper._privateConstructor();
 
-  static final instance = LocationHelper._privateConstructor();
+  static final _instance = LocationHelper._privateConstructor();
+
+  static LocationHelper get instance => _instance;
 
   Position currentPosition;
 

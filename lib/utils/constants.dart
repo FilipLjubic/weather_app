@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:number_slide_animation/number_slide_animation_widget.dart';
 import 'package:weather_app/widgets/current_time.dart';
 import 'package:weather_app/widgets/round_property_icon.dart';
@@ -189,3 +190,5 @@ BoxDecoration draggableScrollableSheetDecoration = const BoxDecoration(
     topRight: Radius.circular(40.0),
   ),
 );
+
+String geocoderAPI = DotEnv().env['GEOCODER_API'];
