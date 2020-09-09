@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:weather_app/screens/search.dart';
+import 'package:weather_app/utils/location_helper.dart';
 
 class FloatingSearchBar extends StatefulWidget {
   @override
@@ -14,6 +15,8 @@ class _FloatingSearchBarState extends State<FloatingSearchBar> {
   void initState() {
     super.initState();
     hintText = "Enter a location";
+
+    LocationHelper.instance.updateCurrentPisiton();
   }
 
   @override

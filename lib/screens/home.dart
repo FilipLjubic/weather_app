@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/utils/constants.dart';
+import 'package:weather_app/utils/location_helper.dart';
 import 'package:weather_app/widgets/current_weather_card.dart';
 import 'package:weather_app/widgets/floating_search_bar.dart';
 import 'package:weather_app/widgets/hourly_forecast_card.dart';

@@ -33,6 +33,9 @@ class _SearchScreenState extends State<SearchScreen> {
                       borderRadius: BorderRadius.circular(7.0),
                     ),
                     child: ListTile(
+                      onTap: () {
+                        return Navigator.pop(context, searchTextNotifier.value);
+                      },
                       leading: Container(
                         padding: const EdgeInsets.all(5.0),
                         decoration: BoxDecoration(
@@ -46,7 +49,13 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                       title: ValueListenableBuilder(
                         valueListenable: searchTextNotifier,
-                        builder: (context, value, child) => Text(value),
+                        builder: (context, value, child) => RichText(
+                          text: TextSpan(children: [
+                            TextSpan(
+                                text: value,
+                                style: TextStyle(color: Colors.black)),
+                          ]),
+                        ),
                       ),
                     ),
                   )
