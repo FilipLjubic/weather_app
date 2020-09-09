@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+// TODO: - search sa suggestionima za autocomplete - typeahead
+///      - speech to text mic opcija
+
+ValueNotifier<String> searchTextNotifier = ValueNotifier<String>("");
+
 class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -23,7 +28,24 @@ class SearchBar extends StatelessWidget {
             ),
             onPressed: () => Navigator.pop(context),
           ),
-          title: SearchTextField(),
+          title: TextField(
+            onChanged: (value) => searchTextNotifier.value = value,
+            onSubmitted: (value) => Navigator.pop(context, value),
+            autofocus: true,
+            keyboardType: TextInputType.text,
+            textInputAction: TextInputAction.go,
+            style: TextStyle(
+              fontFamily: "Montserrat",
+            ),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              // set to current location
+              hintText: "Enter a location",
+              hintStyle: TextStyle(
+                fontFamily: "Montserrat",
+              ),
+            ),
+          ),
           // make it shine while its being held
           trailing: IconButton(
             icon: const Icon(
@@ -32,29 +54,6 @@ class SearchBar extends StatelessWidget {
             ),
             onPressed: () => print("mic"),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class SearchTextField extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      onSubmitted: (value) => Navigator.pop(context, value),
-      autofocus: true,
-      keyboardType: TextInputType.text,
-      textInputAction: TextInputAction.go,
-      style: TextStyle(
-        fontFamily: "Montserrat",
-      ),
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        // set to current location
-        hintText: "Enter a location",
-        hintStyle: TextStyle(
-          fontFamily: "Montserrat",
         ),
       ),
     );

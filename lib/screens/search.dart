@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/widgets/search_bar.dart';
 
-// TODO: - search sa suggestionima za autocomplete - typeahead
-///      - speech to text mic opcija
+class SearchScreen extends StatefulWidget {
+  @override
+  _SearchScreenState createState() => _SearchScreenState();
+}
 
-class SearchScreen extends StatelessWidget {
+class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -16,10 +18,41 @@ class SearchScreen extends StatelessWidget {
           }
         },
         child: Scaffold(
-          body: Center(
-            child: Container(
-              child: SearchBar(),
-            ),
+          body: Column(
+            children: [
+              SearchBar(),
+              ListView(
+                shrinkWrap: true,
+                padding: const EdgeInsets.only(bottom: 2.0, top: 10.0),
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: kElevationToShadow[1],
+                      borderRadius: BorderRadius.circular(7.0),
+                    ),
+                    child: ListTile(
+                      leading: Container(
+                        padding: const EdgeInsets.all(5.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.0),
+                          color: Colors.grey[100],
+                        ),
+                        child: Icon(
+                          Icons.location_city,
+                          color: Colors.black54,
+                        ),
+                      ),
+                      title: ValueListenableBuilder(
+                        valueListenable: searchTextNotifier,
+                        builder: (context, value, child) => Text(value),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ],
           ),
         ),
       ),
