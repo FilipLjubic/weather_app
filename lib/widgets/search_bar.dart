@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 // TODO: - search sa suggestionima za autocomplete - typeahead
 ///      - speech to text mic opcija
 
-ValueNotifier<String> searchTextNotifier = ValueNotifier<String>("");
-
 class SearchBar extends StatelessWidget {
+  final TextField textField;
+
+  SearchBar({@required this.textField});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,24 +30,7 @@ class SearchBar extends StatelessWidget {
             ),
             onPressed: () => Navigator.pop(context),
           ),
-          title: TextField(
-            onChanged: (value) => searchTextNotifier.value = value,
-            onSubmitted: (value) => Navigator.pop(context, value),
-            autofocus: true,
-            keyboardType: TextInputType.text,
-            textInputAction: TextInputAction.go,
-            style: TextStyle(
-              fontFamily: "Montserrat",
-            ),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              // set to current location
-              hintText: "Enter a location",
-              hintStyle: TextStyle(
-                fontFamily: "Montserrat",
-              ),
-            ),
-          ),
+          title: textField,
           // make it shine while its being held
           trailing: IconButton(
             icon: const Icon(

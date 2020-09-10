@@ -8,7 +8,7 @@ import 'constants.dart';
 
 // Singleton class
 class LocationHelper {
-  List<Suggestion> suggestions = [];
+  List<Suggestion> _suggestions = [];
   LocationHelper._privateConstructor();
 
   static final _instance = LocationHelper._privateConstructor();
@@ -23,7 +23,7 @@ class LocationHelper {
     print(currentPosition);
   }
 
-  Future<void> getSuggestions(query) async {
+  Future<void> updateSuggestions(query) async {
     http.Response response = await http.get(
         "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=$geocoderAPI&query=$query&maxresults=12");
 
@@ -31,16 +31,20 @@ class LocationHelper {
       // OK
       // create a list of suggestions
       List<dynamic> responseList = json.decode(response.body)['suggestions'];
-      List<Suggestion> suggestions = [];
       for (int i = 0; i < responseList.length; i++) {
         Suggestion suggestion = Suggestion.fromJson(responseList[i]);
-        suggestions.add(suggestion);
+        _suggestions.add(suggestion);
       }
-      print(suggestions[1].label);
     } else {
       throw Exception('Failed to load!');
     }
   }
+
+  void clearSuggestions() {
+    _suggestions.clear();
+  }
+
+  List<Suggestion> get suggestions => _suggestions;
 
   // retrieve location details when user selects a suggestion using look-up by Id
 }

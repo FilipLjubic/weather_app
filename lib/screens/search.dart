@@ -7,6 +7,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  final textFieldController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -20,7 +21,26 @@ class _SearchScreenState extends State<SearchScreen> {
         child: Scaffold(
           body: Column(
             children: [
-              SearchBar(),
+              SearchBar(
+                textField: TextField(
+                  controller: textFieldController,
+                  onSubmitted: (value) => Navigator.pop(context, value),
+                  autofocus: true,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.go,
+                  style: TextStyle(
+                    fontFamily: "Montserrat",
+                  ),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    // set to current location
+                    hintText: "Enter a location",
+                    hintStyle: TextStyle(
+                      fontFamily: "Montserrat",
+                    ),
+                  ),
+                ),
+              ),
               ListView(
                 shrinkWrap: true,
                 padding: const EdgeInsets.only(bottom: 2.0, top: 10.0),
@@ -34,7 +54,10 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                     child: ListTile(
                       onTap: () {
-                        return Navigator.pop(context, searchTextNotifier.value);
+                        return Navigator.pop(
+                          context,
+                          textFieldController.text,
+                        );
                       },
                       leading: Container(
                         padding: const EdgeInsets.all(5.0),
@@ -45,16 +68,6 @@ class _SearchScreenState extends State<SearchScreen> {
                         child: Icon(
                           Icons.location_city,
                           color: Colors.black54,
-                        ),
-                      ),
-                      title: ValueListenableBuilder(
-                        valueListenable: searchTextNotifier,
-                        builder: (context, value, child) => RichText(
-                          text: TextSpan(children: [
-                            TextSpan(
-                                text: value,
-                                style: TextStyle(color: Colors.black)),
-                          ]),
                         ),
                       ),
                     ),
