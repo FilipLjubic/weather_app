@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/widgets/search_bar.dart';
 
-// example of api call
-//https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=dEjzIBhZPWE2ieWDQ0VOMJTxeP9Ezw4p4PJfObDBYWk&query=Maksim&maxresults=10
-
 class SearchScreen extends StatefulWidget {
   @override
   _SearchScreenState createState() => _SearchScreenState();

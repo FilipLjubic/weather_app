@@ -17,6 +17,7 @@ class _FloatingSearchBarState extends State<FloatingSearchBar> {
     hintText = "Enter a location";
 
     LocationHelper.instance.updateCurrentPisiton();
+    LocationHelper.instance.getSuggestions("Pul");
   }
 
   @override
