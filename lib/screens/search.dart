@@ -86,7 +86,10 @@ class _SearchScreenState extends State<SearchScreen> {
                             ),
                             child: ListTile(
                               onTap: () {
-                                String cityName = snapshot.data[index].city;
+                                String cityName = snapshot.data[index].city ??
+                                    (snapshot.data[index].label.length > 25
+                                        ? snapshot.data[index].country
+                                        : snapshot.data[index].label);
                                 return Navigator.pop(
                                   context,
                                   cityName,

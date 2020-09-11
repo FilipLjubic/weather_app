@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-// TODO: - search sa suggestionima za autocomplete - typeahead
-///      - speech to text mic opcija
+///      TODO: - speech to text mic opcija
 
 class SearchBar extends StatelessWidget {
   final TextField textField;
