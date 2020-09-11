@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:geolocator/geolocator.dart';
@@ -8,8 +9,9 @@ import 'constants.dart';
 
 // Singleton class
 class LocationHelper {
-  List<Suggestion> _suggestions = [];
   LocationHelper._privateConstructor();
+  Timer _timer;
+  String _previousQuery;
 
   static final _instance = LocationHelper._privateConstructor();
 
@@ -23,7 +25,8 @@ class LocationHelper {
     print(currentPosition);
   }
 
-  Future<void> updateSuggestions(query) async {
+  Future<List<Suggestion>> updateSuggestions(query) async {
+    _previousQuery = query;
     http.Response response = await http.get(
         "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=$geocoderAPI&query=$query&maxresults=12");
 
@@ -31,20 +34,29 @@ class LocationHelper {
       // OK
       // create a list of suggestions
       List<dynamic> responseList = json.decode(response.body)['suggestions'];
-      for (int i = 0; i < responseList.length; i++) {
-        Suggestion suggestion = Suggestion.fromJson(responseList[i]);
-        _suggestions.add(suggestion);
-      }
+
+      return responseList
+          .map((response) => Suggestion.fromJson(response))
+          .toList();
     } else {
       throw Exception('Failed to load!');
     }
   }
 
-  void clearSuggestions() {
-    _suggestions.clear();
+  Future<List<Suggestion>> searchWithThrottle(String keyword) async {
+    _timer?.cancel();
+    List<Suggestion> suggestions = [];
+    if (keyword != _previousQuery && keyword.isNotEmpty) {
+      _previousQuery = keyword;
+      _timer = Timer.periodic(Duration(milliseconds: 350), (timer) async {
+        suggestions = await updateSuggestions(keyword);
+        _timer.cancel();
+        return suggestions;
+      });
+    }
+    print(suggestions);
+    return suggestions;
   }
-
-  List<Suggestion> get suggestions => _suggestions;
 
   // retrieve location details when user selects a suggestion using look-up by Id
 }
