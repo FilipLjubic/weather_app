@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-
+import 'package:darq/darq.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_app/models/suggestion.dart';
@@ -37,6 +37,7 @@ class LocationHelper {
 
       return responseList
           .map((response) => Suggestion.fromJson(response))
+          .distinct((x) => x.country)
           .toList();
     } else {
       throw Exception('Failed to load!');

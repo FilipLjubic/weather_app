@@ -11,14 +11,11 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  final textFieldController = TextEditingController();
   StreamController<List<Suggestion>> _suggestionStream;
 
   @override
   void dispose() {
     super.dispose();
-    textFieldController.dispose();
-    _suggestionStream.close();
   }
 
   @override
@@ -43,7 +40,6 @@ class _SearchScreenState extends State<SearchScreen> {
             children: [
               SearchBar(
                 textField: TextField(
-                  controller: textFieldController,
                   onChanged: (value) {
                     LocationHelper.instance
                         .searchWithThrottle(value, _suggestionStream);
@@ -69,41 +65,51 @@ class _SearchScreenState extends State<SearchScreen> {
                   stream: _suggestionStream.stream,
                   builder: (context, AsyncSnapshot<List<Suggestion>> snapshot) {
                     if (!snapshot.hasData) {
-                      return Container();
+                      return Container(
+                        margin: const EdgeInsets.only(top: 100.0),
+                      );
                     } else {
-                      return ListView.builder(
-                        padding:
-                            const EdgeInsets.only(bottom: 10.0, top: 100.0),
-                        shrinkWrap: true,
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (context, index) => Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 10.0, vertical: 3.0),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: kElevationToShadow[1],
-                            borderRadius: BorderRadius.circular(7.0),
-                          ),
-                          child: ListTile(
-                            onTap: () {
-                              return Navigator.pop(
-                                context,
-                                textFieldController.text,
-                              );
-                            },
-                            leading: Container(
-                              padding: const EdgeInsets.all(5.0),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12.0),
-                                color: Colors.grey[100],
-                              ),
-                              child: Icon(
-                                Icons.location_city,
-                                color: Colors.black54,
-                              ),
+                      return Container(
+                        margin: const EdgeInsets.only(top: 90.0),
+                        child: ListView.builder(
+                          padding:
+                              const EdgeInsets.only(bottom: 10.0, top: 10.0),
+                          shrinkWrap: true,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, index) => Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 3.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              boxShadow: kElevationToShadow[1],
+                              borderRadius: BorderRadius.circular(7.0),
                             ),
-                            title: Text(snapshot.data[index].label),
-                            subtitle: Text(snapshot.data[index].country ?? " "),
+                            child: ListTile(
+                              onTap: () {
+                                String cityName = snapshot.data[index].city;
+                                return Navigator.pop(
+                                  context,
+                                  cityName,
+                                );
+                              },
+                              leading: Container(
+                                padding: const EdgeInsets.all(5.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  color: Colors.grey[100],
+                                ),
+                                child: Icon(
+                                  Icons.location_city,
+                                  color: Colors.black54,
+                                ),
+                              ),
+                              title: snapshot.data[index].city == null
+                                  ? Text("${snapshot.data[index].label}")
+                                  : Text("${snapshot.data[index].city}"),
+                              subtitle: snapshot.data[index].country == null
+                                  ? null
+                                  : Text("${snapshot.data[index].country}"),
+                            ),
                           ),
                         ),
                       );
