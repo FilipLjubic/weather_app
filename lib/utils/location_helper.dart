@@ -43,19 +43,18 @@ class LocationHelper {
     }
   }
 
-  Future<List<Suggestion>> searchWithThrottle(String keyword) async {
+  void searchWithThrottle(
+      String keyword, StreamController streamController) async {
     _timer?.cancel();
     List<Suggestion> suggestions = [];
     if (keyword != _previousQuery && keyword.isNotEmpty) {
       _previousQuery = keyword;
       _timer = Timer.periodic(Duration(milliseconds: 350), (timer) async {
         suggestions = await updateSuggestions(keyword);
+        streamController.add(suggestions);
         _timer.cancel();
-        return suggestions;
       });
     }
-    print(suggestions);
-    return suggestions;
   }
 
   // retrieve location details when user selects a suggestion using look-up by Id

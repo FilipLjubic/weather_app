@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:weather_app/models/suggestion.dart';
 import 'package:weather_app/utils/location_helper.dart';
@@ -10,16 +12,19 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final textFieldController = TextEditingController();
+  StreamController<List<Suggestion>> _suggestionStream;
 
   @override
   void dispose() {
     super.dispose();
     textFieldController.dispose();
+    _suggestionStream.close();
   }
 
   @override
   void initState() {
     super.initState();
+    _suggestionStream = StreamController<List<Suggestion>>();
   }
 
   @override
@@ -33,11 +38,16 @@ class _SearchScreenState extends State<SearchScreen> {
           }
         },
         child: Scaffold(
-          body: Column(
+          resizeToAvoidBottomInset: false,
+          body: Stack(
             children: [
               SearchBar(
                 textField: TextField(
                   controller: textFieldController,
+                  onChanged: (value) {
+                    LocationHelper.instance
+                        .searchWithThrottle(value, _suggestionStream);
+                  },
                   onSubmitted: (value) => Navigator.pop(context, value),
                   autofocus: true,
                   keyboardType: TextInputType.text,
@@ -55,19 +65,20 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ),
               ),
-              FutureBuilder(
-                  future: LocationHelper.instance
-                      .searchWithThrottle(textFieldController.text),
+              StreamBuilder(
+                  stream: _suggestionStream.stream,
                   builder: (context, AsyncSnapshot<List<Suggestion>> snapshot) {
                     if (!snapshot.hasData) {
                       return Container();
                     } else {
                       return ListView.builder(
-                        padding: const EdgeInsets.only(bottom: 2.0, top: 10.0),
+                        padding:
+                            const EdgeInsets.only(bottom: 10.0, top: 100.0),
                         shrinkWrap: true,
                         itemCount: snapshot.data.length,
                         itemBuilder: (context, index) => Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 3.0),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             boxShadow: kElevationToShadow[1],
@@ -92,6 +103,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               ),
                             ),
                             title: Text(snapshot.data[index].label),
+                            subtitle: Text(snapshot.data[index].country ?? " "),
                           ),
                         ),
                       );
