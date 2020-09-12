@@ -11,11 +11,10 @@ import 'constants.dart';
 class LocationHelper {
   LocationHelper._privateConstructor();
   Timer _timer;
-  String _previousQuery;
-  bool _isLoading = false;
+  String _previousQuery = "";
   Position currentPosition;
 
-  bool get isLoading => _isLoading;
+  String get lastQuery => _previousQuery;
 
   static final _instance = LocationHelper._privateConstructor();
 
@@ -27,8 +26,6 @@ class LocationHelper {
   }
 
   Future<List<Suggestion>> updateSuggestions(query) async {
-    _isLoading = true;
-
     _previousQuery = query;
     http.Response response = await http.get(
         "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=$geocoderAPI&query=$query&maxresults=12");
@@ -37,7 +34,6 @@ class LocationHelper {
       // OK
       // create a list of suggestions
       List<dynamic> responseList = json.decode(response.body)['suggestions'];
-      _isLoading = false;
 
       return responseList
           .map((response) => Suggestion.fromJson(response))
@@ -51,11 +47,16 @@ class LocationHelper {
   void searchWithThrottle(
       String keyword, StreamController streamController) async {
     _timer?.cancel();
+    if (keyword.isEmpty) {
+      _previousQuery = keyword;
+      streamController.sink.add(null);
+      return;
+    }
     List<Suggestion> suggestions = [];
     if (keyword != _previousQuery && keyword.isNotEmpty) {
       _previousQuery = keyword;
       _timer = Timer.periodic(Duration(milliseconds: 350), (timer) async {
-        streamController.sink.add(null);
+        streamController.sink.add(null); // triggers progress indicator
         suggestions = await updateSuggestions(keyword);
         streamController.add(suggestions);
         _timer.cancel();
