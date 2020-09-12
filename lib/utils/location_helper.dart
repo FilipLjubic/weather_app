@@ -13,6 +13,7 @@ class LocationHelper {
   Timer _timer;
   String _previousQuery;
   bool _isLoading = false;
+  Position currentPosition;
 
   bool get isLoading => _isLoading;
 
@@ -20,12 +21,9 @@ class LocationHelper {
 
   static LocationHelper get instance => _instance;
 
-  Position currentPosition;
-
   void updateCurrentPisiton() async {
     currentPosition =
         await getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
-    print(currentPosition);
   }
 
   Future<List<Suggestion>> updateSuggestions(query) async {
@@ -57,6 +55,7 @@ class LocationHelper {
     if (keyword != _previousQuery && keyword.isNotEmpty) {
       _previousQuery = keyword;
       _timer = Timer.periodic(Duration(milliseconds: 350), (timer) async {
+        streamController.sink.add(null);
         suggestions = await updateSuggestions(keyword);
         streamController.add(suggestions);
         _timer.cancel();

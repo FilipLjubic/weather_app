@@ -56,19 +56,19 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ),
               ),
-              StreamBuilder(
+              StreamBuilder<List<Suggestion>>(
                   stream: _suggestionStream.stream,
                   builder: (context, AsyncSnapshot<List<Suggestion>> snapshot) {
                     if (!snapshot.hasData) {
-                      return Container(
-                        margin: const EdgeInsets.only(top: 100.0),
-                      );
-                    } else if (LocationHelper.instance.isLoading) {
                       return Container(
                         margin: EdgeInsets.only(
                             top: 100.0,
                             left: MediaQuery.of(context).size.width / 2 - 30),
                         child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.data.length == 0) {
+                      return Container(
+                        margin: const EdgeInsets.only(top: 100.0),
                       );
                     } else {
                       return Container(
