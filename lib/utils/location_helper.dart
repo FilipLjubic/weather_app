@@ -12,6 +12,9 @@ class LocationHelper {
   LocationHelper._privateConstructor();
   Timer _timer;
   String _previousQuery;
+  bool _isLoading = false;
+
+  bool get isLoading => _isLoading;
 
   static final _instance = LocationHelper._privateConstructor();
 
@@ -26,6 +29,8 @@ class LocationHelper {
   }
 
   Future<List<Suggestion>> updateSuggestions(query) async {
+    _isLoading = true;
+
     _previousQuery = query;
     http.Response response = await http.get(
         "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=$geocoderAPI&query=$query&maxresults=12");
@@ -34,6 +39,7 @@ class LocationHelper {
       // OK
       // create a list of suggestions
       List<dynamic> responseList = json.decode(response.body)['suggestions'];
+      _isLoading = false;
 
       return responseList
           .map((response) => Suggestion.fromJson(response))

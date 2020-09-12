@@ -14,11 +14,6 @@ class _SearchScreenState extends State<SearchScreen> {
   StreamController<List<Suggestion>> _suggestionStream;
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   void initState() {
     super.initState();
     _suggestionStream = StreamController<List<Suggestion>>();
@@ -67,6 +62,13 @@ class _SearchScreenState extends State<SearchScreen> {
                     if (!snapshot.hasData) {
                       return Container(
                         margin: const EdgeInsets.only(top: 100.0),
+                      );
+                    } else if (LocationHelper.instance.isLoading) {
+                      return Container(
+                        margin: EdgeInsets.only(
+                            top: 100.0,
+                            left: MediaQuery.of(context).size.width / 2 - 30),
+                        child: CircularProgressIndicator(),
                       );
                     } else {
                       return Container(
