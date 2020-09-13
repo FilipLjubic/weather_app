@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 
 class SearchBar extends StatelessWidget {
   final TextField textField;
+  final Widget icon;
 
-  SearchBar({@required this.textField});
+  SearchBar({@required this.textField, @required this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +31,7 @@ class SearchBar extends StatelessWidget {
             onPressed: () => Navigator.pop(context),
           ),
           title: textField,
-          // make it shine while its being held
-          trailing: IconButton(
-            icon: const Icon(
-              Icons.mic,
-              color: Colors.black,
-            ),
-            onPressed: () => print("mic"),
-          ),
+          trailing: icon,
         ),
       ),
     );

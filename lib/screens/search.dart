@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_app/models/suggestion.dart';
 import 'package:weather_app/utils/constants.dart';
@@ -7,6 +7,7 @@ import 'package:weather_app/utils/location_helper.dart';
 import 'package:weather_app/widgets/marginalized_progress_indicator.dart';
 import 'package:weather_app/widgets/search_bar.dart';
 import 'package:weather_app/widgets/suggestion_tile.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -15,11 +16,44 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   StreamController<List<Suggestion>> _suggestionStream;
+  TextEditingController textEditingController;
+  stt.SpeechToText _speech;
+  bool _isListening = false;
 
   @override
   void initState() {
     super.initState();
+    textEditingController = TextEditingController();
     _suggestionStream = StreamController<List<Suggestion>>();
+    _speech = stt.SpeechToText();
+    textEditingController.addListener(() {
+      LocationHelper.instance
+          .searchWithThrottle(textEditingController.text, _suggestionStream);
+    });
+  }
+
+  void _listen() async {
+    if (!_isListening) {
+      bool available = await _speech.initialize(
+        onStatus: (value) => print('onStatus: $value'),
+        onError: (value) => print('onError: $value'),
+      );
+      if (available) {
+        setState(() {
+          _isListening = true;
+          _speech.listen(
+            onResult: (result) => setState(() {
+              textEditingController.text = result.recognizedWords;
+            }),
+          );
+        });
+      }
+    } else {
+      setState(() {
+        _isListening = false;
+        _speech.stop();
+      });
+    }
   }
 
   @override
@@ -38,6 +72,7 @@ class _SearchScreenState extends State<SearchScreen> {
             children: [
               SearchBar(
                 textField: TextField(
+                  controller: textEditingController,
                   onChanged: (value) {
                     LocationHelper.instance
                         .searchWithThrottle(value, _suggestionStream);
@@ -45,6 +80,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   onSubmitted: (value) {
                     _suggestionStream.close();
                     LocationHelper.instance.previousQuery = "";
+                    print(value);
                     return Navigator.pop(context, value);
                   },
                   autofocus: true,
@@ -54,6 +90,13 @@ class _SearchScreenState extends State<SearchScreen> {
                     fontFamily: "Montserrat",
                   ),
                   decoration: textFieldDecoration,
+                ),
+                icon: IconButton(
+                  icon: const Icon(
+                    Icons.mic,
+                    color: Colors.black,
+                  ),
+                  onPressed: _listen,
                 ),
               ),
               StreamBuilder<List<Suggestion>>(

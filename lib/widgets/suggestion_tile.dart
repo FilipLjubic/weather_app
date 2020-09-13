@@ -5,7 +5,7 @@ import 'package:weather_app/utils/location_helper.dart';
 
 class SuggestionTile extends StatelessWidget {
   const SuggestionTile({
-    @required StreamController<List<Suggestion>> this.suggestionStream,
+    @required this.suggestionStream,
     @required this.snapshot,
     @required this.index,
   });

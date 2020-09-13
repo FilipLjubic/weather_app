@@ -23,7 +23,7 @@ class LocationHelper {
         await getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
   }
 
-  Future<List<Suggestion>> updateSuggestions(query) async {
+  Future<List<Suggestion>> _updateSuggestions(query) async {
     previousQuery = query;
     http.Response response = await http.get(
         "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=$geocoderAPI&query=$query&maxresults=12");
@@ -55,7 +55,7 @@ class LocationHelper {
       previousQuery = keyword;
       _timer = Timer.periodic(Duration(milliseconds: 350), (timer) async {
         streamController.sink.add(null); // triggers progress indicator
-        suggestions = await updateSuggestions(keyword);
+        suggestions = await _updateSuggestions(keyword);
         streamController.add(suggestions);
         _timer.cancel();
       });

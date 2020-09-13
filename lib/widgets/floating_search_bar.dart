@@ -41,6 +41,9 @@ class _FloatingSearchBarState extends State<FloatingSearchBar> {
               ),
             );
             if (hintText != null) {
+              if (hintText.isEmpty) {
+                hintText = "Enter a location";
+              }
               setState(() {});
             }
           },
