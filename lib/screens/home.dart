@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/utils/constants.dart';
-import 'package:weather_app/utils/location_helper.dart';
 import 'package:weather_app/widgets/current_weather_card.dart';
 import 'package:weather_app/widgets/floating_search_bar.dart';
 import 'package:weather_app/widgets/hourly_forecast_card.dart';
 import 'package:weather_icons/weather_icons.dart';
 
-/// TODO: - make it beautiful
+/// TODO:
 ///       - add animations - staggered animations na horizontalni list view
-///                        - animations package - fadethrough za refresh
 ///                        - progress HUD za kada refresha/searcha
 ///
-///       - posto sam poceo strugglat sa designom idem odrediti sta ce zapravo aplikacija imati
-/// imati ce:
-///           - hourly forecast 24 sata - kartice s vremenom, ikonicom i stupnjevima, on select bude obojano okolo
-///           - forecast sljedeceg tjedna na drugom screenu - min/max, ikonica i main
 ///           - napravit da ne moze biti u landscape modeu
 
 class Home extends StatelessWidget {

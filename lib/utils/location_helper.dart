@@ -11,10 +11,8 @@ import 'constants.dart';
 class LocationHelper {
   LocationHelper._privateConstructor();
   Timer _timer;
-  String _previousQuery = "";
+  String previousQuery = "";
   Position currentPosition;
-
-  String get lastQuery => _previousQuery;
 
   static final _instance = LocationHelper._privateConstructor();
 
@@ -26,7 +24,7 @@ class LocationHelper {
   }
 
   Future<List<Suggestion>> updateSuggestions(query) async {
-    _previousQuery = query;
+    previousQuery = query;
     http.Response response = await http.get(
         "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=$geocoderAPI&query=$query&maxresults=12");
 
@@ -48,13 +46,13 @@ class LocationHelper {
       String keyword, StreamController streamController) async {
     _timer?.cancel();
     if (keyword.isEmpty) {
-      _previousQuery = keyword;
+      previousQuery = keyword;
       streamController.sink.add(null);
       return;
     }
     List<Suggestion> suggestions = [];
-    if (keyword != _previousQuery && keyword.isNotEmpty) {
-      _previousQuery = keyword;
+    if (keyword != previousQuery && keyword.isNotEmpty) {
+      previousQuery = keyword;
       _timer = Timer.periodic(Duration(milliseconds: 350), (timer) async {
         streamController.sink.add(null); // triggers progress indicator
         suggestions = await updateSuggestions(keyword);

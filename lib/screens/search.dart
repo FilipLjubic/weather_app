@@ -39,7 +39,11 @@ class _SearchScreenState extends State<SearchScreen> {
                     LocationHelper.instance
                         .searchWithThrottle(value, _suggestionStream);
                   },
-                  onSubmitted: (value) => Navigator.pop(context, value),
+                  onSubmitted: (value) {
+                    _suggestionStream.close();
+                    LocationHelper.instance.previousQuery = "";
+                    return Navigator.pop(context, value);
+                  },
                   autofocus: true,
                   keyboardType: TextInputType.text,
                   textInputAction: TextInputAction.go,
@@ -59,7 +63,7 @@ class _SearchScreenState extends State<SearchScreen> {
               StreamBuilder<List<Suggestion>>(
                   stream: _suggestionStream.stream,
                   builder: (context, AsyncSnapshot<List<Suggestion>> snapshot) {
-                    if (LocationHelper.instance.lastQuery.isEmpty &&
+                    if (LocationHelper.instance.previousQuery.isEmpty &&
                         !snapshot.hasData) {
                       return Container(
                         margin: const EdgeInsets.only(top: 100.0),
@@ -89,10 +93,13 @@ class _SearchScreenState extends State<SearchScreen> {
                             ),
                             child: ListTile(
                               onTap: () {
+                                // If there's no city, show either index or whole label, depending if the label is too long or not
                                 String cityName = snapshot.data[index].city ??
                                     (snapshot.data[index].label.length > 25
                                         ? snapshot.data[index].country
                                         : snapshot.data[index].label);
+                                _suggestionStream.close();
+                                LocationHelper.instance.previousQuery = "";
                                 return Navigator.pop(
                                   context,
                                   cityName,
