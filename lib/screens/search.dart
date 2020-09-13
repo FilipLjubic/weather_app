@@ -2,8 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:weather_app/models/suggestion.dart';
+import 'package:weather_app/utils/constants.dart';
 import 'package:weather_app/utils/location_helper.dart';
+import 'package:weather_app/widgets/marginalized_progress_indicator.dart';
 import 'package:weather_app/widgets/search_bar.dart';
+import 'package:weather_app/widgets/suggestion_tile.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -50,14 +53,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   style: TextStyle(
                     fontFamily: "Montserrat",
                   ),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    // set to current location
-                    hintText: "Enter a location",
-                    hintStyle: TextStyle(
-                      fontFamily: "Montserrat",
-                    ),
-                  ),
+                  decoration: textFieldDecoration,
                 ),
               ),
               StreamBuilder<List<Suggestion>>(
@@ -69,12 +65,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         margin: const EdgeInsets.only(top: 100.0),
                       );
                     } else if (!snapshot.hasData) {
-                      return Container(
-                        margin: EdgeInsets.only(
-                            top: 100.0,
-                            left: MediaQuery.of(context).size.width / 2 - 30),
-                        child: CircularProgressIndicator(),
-                      );
+                      return MarginalizedProgressIndicator();
                     } else {
                       return Container(
                         margin: const EdgeInsets.only(top: 90.0),
@@ -91,37 +82,10 @@ class _SearchScreenState extends State<SearchScreen> {
                               boxShadow: kElevationToShadow[1],
                               borderRadius: BorderRadius.circular(7.0),
                             ),
-                            child: ListTile(
-                              onTap: () {
-                                // If there's no city, show either index or whole label, depending if the label is too long or not
-                                String cityName = snapshot.data[index].city ??
-                                    (snapshot.data[index].label.length > 25
-                                        ? snapshot.data[index].country
-                                        : snapshot.data[index].label);
-                                _suggestionStream.close();
-                                LocationHelper.instance.previousQuery = "";
-                                return Navigator.pop(
-                                  context,
-                                  cityName,
-                                );
-                              },
-                              leading: Container(
-                                padding: const EdgeInsets.all(5.0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  color: Colors.grey[100],
-                                ),
-                                child: Icon(
-                                  Icons.location_city,
-                                  color: Colors.black54,
-                                ),
-                              ),
-                              title: snapshot.data[index].city == null
-                                  ? Text("${snapshot.data[index].label}")
-                                  : Text("${snapshot.data[index].city}"),
-                              subtitle: snapshot.data[index].country == null
-                                  ? null
-                                  : Text("${snapshot.data[index].country}"),
+                            child: SuggestionTile(
+                              suggestionStream: _suggestionStream,
+                              index: index,
+                              snapshot: snapshot,
                             ),
                           ),
                         ),

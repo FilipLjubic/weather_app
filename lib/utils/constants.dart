@@ -191,4 +191,12 @@ BoxDecoration draggableScrollableSheetDecoration = const BoxDecoration(
   ),
 );
 
+InputDecoration textFieldDecoration = InputDecoration(
+  border: InputBorder.none,
+  hintText: "Enter a location",
+  hintStyle: TextStyle(
+    fontFamily: "Montserrat",
+  ),
+);
+
 String geocoderAPI = DotEnv().env['GEOCODER_API'];

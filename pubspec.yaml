@@ -36,6 +36,7 @@ dependencies:
   flutter_dotenv: ^2.1.0
   http: ^0.12.2
   darq: ^0.4.0+1
+  avatar_glow: ^1.2.0
 
 dev_dependencies:
   flutter_test:
