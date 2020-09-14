@@ -200,3 +200,5 @@ InputDecoration textFieldDecoration = InputDecoration(
 );
 
 String geocoderAPI = DotEnv().env['GEOCODER_API'];
+
+String pixabayAPI = DotEnv().env['PIXABAY_API'];

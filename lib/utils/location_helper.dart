@@ -4,7 +4,6 @@ import 'package:darq/darq.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_app/models/suggestion.dart';
-
 import 'constants.dart';
 
 // Singleton class
@@ -23,7 +22,7 @@ class LocationHelper {
         await getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
   }
 
-  Future<List<Suggestion>> _updateSuggestions(query) async {
+  Future<List<Suggestion>> _updateSuggestions(String query) async {
     previousQuery = query;
     http.Response response = await http.get(
         "https://autocomplete.geocoder.ls.hereapi.com/6.2/suggest.json?apiKey=$geocoderAPI&query=$query&maxresults=12");
@@ -38,7 +37,7 @@ class LocationHelper {
           .distinct((x) => x.country)
           .toList();
     } else {
-      throw Exception('Failed to load!');
+      throw Exception('Failed to load suggestions!');
     }
   }
 

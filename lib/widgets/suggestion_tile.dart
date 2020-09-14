@@ -25,6 +25,8 @@ class SuggestionTile extends StatelessWidget {
                 : snapshot.data[index].label);
         suggestionStream.close();
         LocationHelper.instance.previousQuery = "";
+
+        //TODO: dodat query za sliku
         return Navigator.pop(
           context,
           cityName,
