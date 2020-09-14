@@ -9,8 +9,6 @@ import 'package:weather_app/widgets/search_bar.dart';
 import 'package:weather_app/widgets/suggestion_tile.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
-// TODO: speech to text - add a message when it doesn't recognize what you said
-
 class SearchScreen extends StatefulWidget {
   @override
   _SearchScreenState createState() => _SearchScreenState();
@@ -100,9 +98,12 @@ class _SearchScreenState extends State<SearchScreen> {
                     _isListening = false;
                     _speech.stop();
                   }),
-                  child: Icon(
-                    Icons.mic,
-                    color: Colors.black,
+                  child: Container(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Icon(
+                      Icons.mic,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ),
