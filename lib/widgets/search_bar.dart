@@ -20,7 +20,7 @@ class SearchBar extends StatelessWidget {
         ),
         color: Colors.white,
         child: ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 10.0),
+          contentPadding: const EdgeInsets.only(left: 8.0, right: 30.0),
           leading: IconButton(
             highlightColor: Colors.transparent,
             splashColor: Colors.transparent,

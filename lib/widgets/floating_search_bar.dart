@@ -40,12 +40,8 @@ class _FloatingSearchBarState extends State<FloatingSearchBar> {
                 child: SearchScreen(),
               ),
             );
-            if (hintText != null) {
-              if (hintText.isEmpty) {
-                hintText = "Enter a location";
-              }
-              setState(() {});
-            }
+
+            setState(() {});
           },
           behavior: HitTestBehavior.opaque,
           child: Container(
@@ -63,7 +59,7 @@ class _FloatingSearchBarState extends State<FloatingSearchBar> {
                     const SizedBox(
                       width: 16.0,
                     ),
-                    Text(hintText,
+                    Text(hintText ?? "Enter a location",
                         style: TextStyle(
                             fontFamily: "Montserrat", color: Colors.black26)),
                   ],

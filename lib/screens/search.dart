@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:weather_app/models/suggestion.dart';
 import 'package:weather_app/utils/constants.dart';
 import 'package:weather_app/utils/location_helper.dart';
@@ -9,50 +9,49 @@ import 'package:weather_app/widgets/search_bar.dart';
 import 'package:weather_app/widgets/suggestion_tile.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
+// TODO: speech to text - add a message when it doesn't recognize what you said
+
 class SearchScreen extends StatefulWidget {
   @override
   _SearchScreenState createState() => _SearchScreenState();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  // ignore: close_sinks
   StreamController<List<Suggestion>> _suggestionStream;
   TextEditingController textEditingController;
   stt.SpeechToText _speech;
+  bool _available;
   bool _isListening = false;
 
   @override
   void initState() {
     super.initState();
+    _speech = stt.SpeechToText();
+    _initAvailability();
     textEditingController = TextEditingController();
     _suggestionStream = StreamController<List<Suggestion>>();
-    _speech = stt.SpeechToText();
     textEditingController.addListener(() {
       LocationHelper.instance
           .searchWithThrottle(textEditingController.text, _suggestionStream);
     });
   }
 
+  void _initAvailability() async {
+    _available = await _speech.initialize(
+      onStatus: (value) => print('onStatus: $value'),
+      onError: (value) => print('onError: $value'),
+    );
+  }
+
   void _listen() async {
-    if (!_isListening) {
-      bool available = await _speech.initialize(
-        onStatus: (value) => print('onStatus: $value'),
-        onError: (value) => print('onError: $value'),
+    if (_available) {
+      _speech.listen(
+        onResult: (result) => setState(() {
+          textEditingController.text = result.recognizedWords;
+        }),
+        listenFor: Duration(minutes: 1),
       );
-      if (available) {
-        setState(() {
-          _isListening = true;
-          _speech.listen(
-            onResult: (result) => setState(() {
-              textEditingController.text = result.recognizedWords;
-            }),
-          );
-        });
-      }
-    } else {
-      setState(() {
-        _isListening = false;
-        _speech.stop();
-      });
     }
   }
 
@@ -78,7 +77,6 @@ class _SearchScreenState extends State<SearchScreen> {
                         .searchWithThrottle(value, _suggestionStream);
                   },
                   onSubmitted: (value) {
-                    _suggestionStream.close();
                     LocationHelper.instance.previousQuery = "";
                     print(value);
                     return Navigator.pop(context, value);
@@ -91,18 +89,36 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                   decoration: textFieldDecoration,
                 ),
-                icon: IconButton(
-                  icon: const Icon(
+                icon: GestureDetector(
+                  onTapDown: (_) {
+                    setState(() {
+                      _isListening = true;
+                    });
+                    _listen();
+                  },
+                  onTapUp: (_) => setState(() {
+                    _isListening = false;
+                    _speech.stop();
+                  }),
+                  child: Icon(
                     Icons.mic,
                     color: Colors.black,
                   ),
-                  onPressed: _listen,
                 ),
               ),
               StreamBuilder<List<Suggestion>>(
                   stream: _suggestionStream.stream,
                   builder: (context, AsyncSnapshot<List<Suggestion>> snapshot) {
-                    if (LocationHelper.instance.previousQuery.isEmpty &&
+                    if (_isListening) {
+                      return Container(
+                          margin: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).size.height / 2),
+                          child: SpinKitWave(
+                            color: Colors.black12,
+                            size: 30.0,
+                            duration: Duration(milliseconds: 1200),
+                          ));
+                    } else if (LocationHelper.instance.previousQuery.isEmpty &&
                         !snapshot.hasData) {
                       return Container(
                         margin: const EdgeInsets.only(top: 100.0),
