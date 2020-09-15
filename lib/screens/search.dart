@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:weather_app/models/suggestion.dart';
 import 'package:weather_app/utils/constants.dart';
 import 'package:weather_app/utils/location_helper.dart';
@@ -22,6 +23,7 @@ class _SearchScreenState extends State<SearchScreen> {
   stt.SpeechToText _speech;
   bool _available;
   bool _isListening = false;
+  bool _loading = false;
 
   @override
   void initState() {
@@ -56,106 +58,113 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus();
-          }
-        },
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Stack(
-            children: [
-              SearchBar(
-                textField: TextField(
-                  controller: textEditingController,
-                  onChanged: (value) {
-                    LocationHelper.instance
-                        .searchWithThrottle(value, _suggestionStream);
-                  },
-                  onSubmitted: (value) async {
-                    LocationHelper.instance.previousQuery = "";
+    return ModalProgressHUD(
+      inAsyncCall: _loading,
+      child: SafeArea(
+        child: GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: Stack(
+              children: [
+                SearchBar(
+                  textField: TextField(
+                    controller: textEditingController,
+                    onSubmitted: (value) async {
+                      LocationHelper.instance.previousQuery = "";
+                      setState(() {
+                        _loading = true;
+                      });
 
-                    await PhotoHelper.instance.getPhoto(value);
+                      await PhotoHelper.instance.getPhoto(value);
+                      setState(() {
+                        _loading = false;
+                      });
 
-                    return Navigator.pop(context, value);
-                  },
-                  autofocus: true,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.go,
-                  style: TextStyle(
-                    fontFamily: "Montserrat",
+                      return Navigator.pop(context, value);
+                    },
+                    autofocus: true,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.go,
+                    style: TextStyle(
+                      fontFamily: "Montserrat",
+                    ),
+                    decoration: textFieldDecoration,
                   ),
-                  decoration: textFieldDecoration,
-                ),
-                icon: GestureDetector(
-                  onTapDown: (_) {
-                    setState(() {
-                      _isListening = true;
-                    });
-                    _listen();
-                  },
-                  onTapUp: (_) => setState(() {
-                    _isListening = false;
-                    _speech.stop();
-                  }),
-                  child: Container(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Icon(
-                      Icons.mic,
-                      color: Colors.black,
+                  icon: GestureDetector(
+                    onTapDown: (_) {
+                      setState(() {
+                        _isListening = true;
+                      });
+                      _listen();
+                    },
+                    onTapUp: (_) => setState(() {
+                      _isListening = false;
+                      _speech.stop();
+                    }),
+                    child: Container(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Icon(
+                        Icons.mic,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              StreamBuilder<List<Suggestion>>(
-                  stream: _suggestionStream.stream,
-                  builder: (context, AsyncSnapshot<List<Suggestion>> snapshot) {
-                    if (_isListening) {
-                      return Container(
-                          margin: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).size.height / 2),
-                          child: SpinKitWave(
-                            color: Colors.black12,
-                            size: 30.0,
-                            duration: Duration(milliseconds: 1200),
-                          ));
-                    } else if (LocationHelper.instance.previousQuery.isEmpty &&
-                        !snapshot.hasData) {
-                      return Container(
-                        margin: const EdgeInsets.only(top: 100.0),
-                      );
-                    } else if (!snapshot.hasData) {
-                      return MarginalizedProgressIndicator();
-                    } else {
-                      return Container(
-                        margin: const EdgeInsets.only(top: 90.0),
-                        child: ListView.builder(
-                          padding:
-                              const EdgeInsets.only(bottom: 10.0, top: 10.0),
-                          shrinkWrap: true,
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) => Container(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 10.0, vertical: 3.0),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: kElevationToShadow[1],
-                              borderRadius: BorderRadius.circular(7.0),
-                            ),
-                            child: SuggestionTile(
-                              suggestionStream: _suggestionStream,
-                              index: index,
-                              snapshot: snapshot,
+                StreamBuilder<List<Suggestion>>(
+                    stream: _suggestionStream.stream,
+                    builder:
+                        (context, AsyncSnapshot<List<Suggestion>> snapshot) {
+                      if (_isListening) {
+                        return Container(
+                            margin: EdgeInsets.only(
+                                bottom: MediaQuery.of(context).size.height / 2),
+                            child: SpinKitWave(
+                              color: Colors.black12,
+                              size: 30.0,
+                              duration: Duration(milliseconds: 1200),
+                            ));
+                      } else if (LocationHelper
+                              .instance.previousQuery.isEmpty &&
+                          !snapshot.hasData) {
+                        return Container(
+                          margin: const EdgeInsets.only(top: 100.0),
+                        );
+                      } else if (!snapshot.hasData) {
+                        return MarginalizedProgressIndicator();
+                      } else {
+                        return Container(
+                          margin: const EdgeInsets.only(top: 90.0),
+                          child: ListView.builder(
+                            padding:
+                                const EdgeInsets.only(bottom: 10.0, top: 10.0),
+                            shrinkWrap: true,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (context, index) => Container(
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 10.0, vertical: 3.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: kElevationToShadow[1],
+                                borderRadius: BorderRadius.circular(7.0),
+                              ),
+                              child: SuggestionTile(
+                                suggestionStream: _suggestionStream,
+                                index: index,
+                                snapshot: snapshot,
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    }
-                  }),
-            ],
+                        );
+                      }
+                    }),
+              ],
+            ),
           ),
         ),
       ),
