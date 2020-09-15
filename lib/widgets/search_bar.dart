@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-///      TODO: - speech to text mic opcija
-
 class SearchBar extends StatelessWidget {
   final TextField textField;
   final Widget icon;

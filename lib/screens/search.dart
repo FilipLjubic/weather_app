@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:weather_app/models/photo.dart';
 import 'package:weather_app/models/suggestion.dart';
 import 'package:weather_app/utils/constants.dart';
 import 'package:weather_app/utils/location_helper.dart';
@@ -10,8 +9,6 @@ import 'package:weather_app/widgets/marginalized_progress_indicator.dart';
 import 'package:weather_app/widgets/search_bar.dart';
 import 'package:weather_app/widgets/suggestion_tile.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
-
-//TODO: dodati progressHUD za kad ceka ucitavanje nove slike
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -80,8 +77,10 @@ class _SearchScreenState extends State<SearchScreen> {
                   },
                   onSubmitted: (value) async {
                     LocationHelper.instance.previousQuery = "";
-                    Photo photo = await PhotoHelper.instance.getPhoto(value);
-                    return Navigator.pop(context, [value, photo.largeImageUrl]);
+
+                    await PhotoHelper.instance.getPhoto(value);
+
+                    return Navigator.pop(context, value);
                   },
                   autofocus: true,
                   keyboardType: TextInputType.text,

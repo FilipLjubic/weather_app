@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:weather_app/screens/search.dart';
 import 'package:weather_app/utils/location_helper.dart';
 
 class FloatingSearchBar extends StatefulWidget {
+  final Function onTap;
+  final String hintText;
+
+  FloatingSearchBar({@required this.onTap, this.hintText});
+
   @override
   _FloatingSearchBarState createState() => _FloatingSearchBarState();
 }
 
 class _FloatingSearchBarState extends State<FloatingSearchBar> {
-  String hintText;
-
   @override
   void initState() {
     super.initState();
-    hintText = "Enter a location";
 
     // ovo ce se raditi u loadingu
     LocationHelper.instance.updateCurrentPisiton();
@@ -32,17 +32,7 @@ class _FloatingSearchBarState extends State<FloatingSearchBar> {
         ),
         color: const Color(0x99D2F6FF).withOpacity(0.55),
         child: GestureDetector(
-          onTap: () async {
-            hintText = await Navigator.push(
-              context,
-              PageTransition(
-                type: PageTransitionType.fade,
-                child: SearchScreen(),
-              ),
-            );
-
-            setState(() {});
-          },
+          onTap: widget.onTap,
           behavior: HitTestBehavior.opaque,
           child: Container(
             height: 55.0,
@@ -59,7 +49,7 @@ class _FloatingSearchBarState extends State<FloatingSearchBar> {
                     const SizedBox(
                       width: 16.0,
                     ),
-                    Text(hintText ?? "Enter a location",
+                    Text(widget.hintText ?? "Enter a location",
                         style: TextStyle(
                             fontFamily: "Montserrat", color: Colors.black26)),
                   ],

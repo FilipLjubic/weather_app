@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:weather_app/screens/search.dart';
 import 'package:weather_app/utils/constants.dart';
+import 'package:weather_app/utils/photo_helper.dart';
 import 'package:weather_app/widgets/current_weather_card.dart';
 import 'package:weather_app/widgets/floating_search_bar.dart';
 import 'package:weather_app/widgets/hourly_forecast_card.dart';
@@ -11,7 +14,14 @@ import 'package:weather_icons/weather_icons.dart';
 ///
 ///           - napravit da ne moze biti u landscape modeu
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  String hintText;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,14 +34,27 @@ class Home extends StatelessWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   // change with image you get from api (probably networkimage huh)
-                  image: AssetImage("images/zagreb.jpg"),
+                  image: NetworkImage(PhotoHelper.instance.photo.largeImageUrl),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
 
             // floating search bar
-            FloatingSearchBar(),
+            FloatingSearchBar(
+              onTap: () async {
+                hintText = await Navigator.push(
+                  context,
+                  PageTransition(
+                    type: PageTransitionType.fade,
+                    child: SearchScreen(),
+                  ),
+                );
+
+                setState(() {});
+              },
+              hintText: hintText,
+            ),
 
             DraggableScrollableSheet(
               maxChildSize: 0.6,
