@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:weather_app/models/suggestion.dart';
 import 'package:weather_app/utils/location_helper.dart';
+import 'package:weather_app/utils/photo_helper.dart';
 
 class SuggestionTile extends StatelessWidget {
   const SuggestionTile({
@@ -23,10 +24,13 @@ class SuggestionTile extends StatelessWidget {
             (snapshot.data[index].label.length > 25
                 ? snapshot.data[index].country
                 : snapshot.data[index].label);
-        suggestionStream.close();
         LocationHelper.instance.previousQuery = "";
 
+        suggestionStream.close();
+
         //TODO: dodat query za sliku
+        // PhotoHelper.instance.getPhoto(cityName);
+
         return Navigator.pop(
           context,
           cityName,
