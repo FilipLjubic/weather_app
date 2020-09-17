@@ -159,7 +159,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                 snapshot: snapshot,
                                 onTap: () async {
                                   // If there's no city, show either country or whole label, depending if the label is too long or not
-
                                   String cityName = snapshot.data[index].city ??
                                       (snapshot.data[index].label.length > 25
                                           ? snapshot.data[index].country

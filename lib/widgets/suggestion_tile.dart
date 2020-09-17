@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:weather_app/models/suggestion.dart';
-import 'package:weather_app/utils/location_helper.dart';
-import 'package:weather_app/utils/photo_helper.dart';
 
 class SuggestionTile extends StatelessWidget {
   const SuggestionTile({

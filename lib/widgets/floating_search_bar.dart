@@ -4,8 +4,10 @@ import 'package:weather_app/utils/location_helper.dart';
 class FloatingSearchBar extends StatefulWidget {
   final Function onTap;
   final String hintText;
+  final Function onPressedIcon;
 
-  FloatingSearchBar({@required this.onTap, this.hintText});
+  FloatingSearchBar(
+      {@required this.onTap, this.hintText, @required this.onPressedIcon});
 
   @override
   _FloatingSearchBarState createState() => _FloatingSearchBarState();
@@ -56,10 +58,10 @@ class _FloatingSearchBarState extends State<FloatingSearchBar> {
                 ),
                 IconButton(
                   icon: const Icon(
-                    Icons.settings,
+                    Icons.refresh,
                     color: Colors.black54,
                   ),
-                  onPressed: () => print("settings"),
+                  onPressed: widget.onPressedIcon,
                 ),
               ],
             ),
