@@ -17,9 +17,6 @@ class _FloatingSearchBarState extends State<FloatingSearchBar> {
   @override
   void initState() {
     super.initState();
-
-    // ovo ce se raditi u loadingu
-    LocationHelper.instance.updateCurrentPisiton();
   }
 
   @override

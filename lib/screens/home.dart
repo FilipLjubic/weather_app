@@ -59,12 +59,12 @@ class _HomeState extends State<Home> {
                 },
                 hintText: hintText,
                 onPressedIcon: () async {
+                  if (hintText == null) return;
                   setState(() {
                     _loading = true;
                   });
 
-                  if (hintText != null)
-                    await PhotoHelper.instance.getPhoto(hintText);
+                  await PhotoHelper.instance.getPhoto(hintText);
 
                   setState(() {
                     _loading = false;

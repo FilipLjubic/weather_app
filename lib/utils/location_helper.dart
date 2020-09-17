@@ -17,7 +17,7 @@ class LocationHelper {
 
   static LocationHelper get instance => _instance;
 
-  void updateCurrentPisiton() async {
+  Future<void> updateCurrentPisiton() async {
     currentPosition =
         await getCurrentPosition(desiredAccuracy: LocationAccuracy.low);
   }

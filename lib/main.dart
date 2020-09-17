@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:weather_app/screens/home.dart';
+import 'package:weather_app/screens/loading.dart';
 
 // test
 
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Weatheroo',
       debugShowCheckedModeBanner: false,
-      home: Home(),
+      home: LoadingScreen(),
     );
   }
 }
