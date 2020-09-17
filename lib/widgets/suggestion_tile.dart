@@ -9,8 +9,10 @@ class SuggestionTile extends StatelessWidget {
     @required this.suggestionStream,
     @required this.snapshot,
     @required this.index,
+    @required this.onTap,
   });
 
+  final Function onTap;
   final StreamController<List<Suggestion>> suggestionStream;
   final AsyncSnapshot<List<Suggestion>> snapshot;
   final int index;
@@ -18,25 +20,7 @@ class SuggestionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () async {
-        // If there's no city, show either country or whole label, depending if the label is too long or not
-
-        String cityName = snapshot.data[index].city ??
-            (snapshot.data[index].label.length > 25
-                ? snapshot.data[index].country
-                : snapshot.data[index].label);
-
-        //TODO: dodat query za sliku
-        await PhotoHelper.instance.getPhoto(
-            snapshot.data[index].city ?? snapshot.data[index].country);
-
-        LocationHelper.instance.previousQuery = "";
-
-        return Navigator.pop(
-          context,
-          cityName,
-        );
-      },
+      onTap: onTap,
       leading: Container(
         padding: const EdgeInsets.all(5.0),
         decoration: BoxDecoration(

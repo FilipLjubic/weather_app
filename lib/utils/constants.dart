@@ -155,7 +155,7 @@ class MiddleCardRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Text(
-          "Max: 30°",
+          "Min: 20°",
           style: TextStyle(
             fontFamily: "Montserrat",
           ),
@@ -172,7 +172,7 @@ class MiddleCardRow extends StatelessWidget {
           ),
         ),
         Text(
-          "Min: 20°",
+          "Max: 30°",
           style: TextStyle(
             fontFamily: "Montserrat",
           ),

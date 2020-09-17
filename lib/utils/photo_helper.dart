@@ -23,6 +23,7 @@ class PhotoHelper {
     if (response.statusCode == 200) {
       List<dynamic> listOfHits = json.decode(response.body)['hits'];
       if (listOfHits.length == 0) {
+        // could have just repeated getPhoto() but would have to change function to take category which would be an enum but it would have made the code less readable imo
         response = await http.get(
             "https://pixabay.com/api/?key=$pixabayAPI&q=nature&image_type=photo&orientation=vertical");
         Random rng = Random();

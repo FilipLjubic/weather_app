@@ -76,7 +76,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   textField: TextField(
                     controller: textEditingController,
                     onSubmitted: (value) async {
-                      LocationHelper.instance.previousQuery = "";
                       setState(() {
                         _loading = true;
                       });
@@ -85,6 +84,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       setState(() {
                         _loading = false;
                       });
+                      LocationHelper.instance.previousQuery = "";
 
                       return Navigator.pop(context, value);
                     },
@@ -157,6 +157,33 @@ class _SearchScreenState extends State<SearchScreen> {
                                 suggestionStream: _suggestionStream,
                                 index: index,
                                 snapshot: snapshot,
+                                onTap: () async {
+                                  // If there's no city, show either country or whole label, depending if the label is too long or not
+
+                                  String cityName = snapshot.data[index].city ??
+                                      (snapshot.data[index].label.length > 25
+                                          ? snapshot.data[index].country
+                                          : snapshot.data[index].label);
+
+                                  setState(() {
+                                    _loading = true;
+                                  });
+
+                                  await PhotoHelper.instance.getPhoto(
+                                      snapshot.data[index].city ??
+                                          snapshot.data[index].country);
+
+                                  setState(() {
+                                    _loading = false;
+                                  });
+
+                                  LocationHelper.instance.previousQuery = "";
+
+                                  return Navigator.pop(
+                                    context,
+                                    cityName,
+                                  );
+                                },
                               ),
                             ),
                           ),
