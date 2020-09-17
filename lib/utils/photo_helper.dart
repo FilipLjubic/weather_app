@@ -4,6 +4,7 @@ import 'package:weather_app/models/photo.dart';
 import 'dart:async';
 import 'package:weather_app/utils/constants.dart';
 import 'dart:convert';
+import 'dart:math';
 
 class PhotoHelper {
   PhotoHelper._privateConstructor();
@@ -19,10 +20,21 @@ class PhotoHelper {
   Future<void> getPhoto(String query) async {
     http.Response response = await http.get(
         'https://pixabay.com/api/?key=$pixabayAPI&q=$query&image_type=photo&orientation=vertical&category=buildings');
-
     if (response.statusCode == 200) {
-      photo = Photo.fromJson(json.decode(response.body)['hits'][0]);
-      print(photo.largeImageUrl);
+      List<dynamic> listOfHits = json.decode(response.body)['hits'];
+      if (listOfHits.length == 0) {
+        response = await http.get(
+            "https://pixabay.com/api/?key=$pixabayAPI&q=nature&image_type=photo&orientation=vertical");
+        Random rng = Random();
+        listOfHits = json.decode(response.body)['hits'];
+        int index = rng.nextInt(listOfHits.length);
+
+        photo = Photo.fromJson(listOfHits[index]);
+      } else {
+        Random rng = Random();
+        int index = rng.nextInt(listOfHits.length);
+        photo = Photo.fromJson(listOfHits[index]);
+      }
     } else {
       throw Exception("Error getting image!");
     }

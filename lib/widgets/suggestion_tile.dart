@@ -18,18 +18,19 @@ class SuggestionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {
-        // If there's no city, show either index or whole label, depending if the label is too long or not
+      onTap: () async {
+        // If there's no city, show either country or whole label, depending if the label is too long or not
+
         String cityName = snapshot.data[index].city ??
             (snapshot.data[index].label.length > 25
                 ? snapshot.data[index].country
                 : snapshot.data[index].label);
-        LocationHelper.instance.previousQuery = "";
-
-        suggestionStream.close();
 
         //TODO: dodat query za sliku
-        // PhotoHelper.instance.getPhoto(cityName);
+        await PhotoHelper.instance.getPhoto(
+            snapshot.data[index].city ?? snapshot.data[index].country);
+
+        LocationHelper.instance.previousQuery = "";
 
         return Navigator.pop(
           context,
