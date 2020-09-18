@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/utils/location_helper.dart';
 
 class FloatingSearchBar extends StatefulWidget {
   final Function onTap;

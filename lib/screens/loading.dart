@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:weather/weather.dart';
 import 'package:weather_app/screens/home.dart';
-import 'package:weather_app/utils/constants.dart';
-import 'package:weather_app/utils/location_helper.dart';
+import 'package:weather_app/utils/cur_weather.dart';
+
+// TODO:
+//       create singleton for weather
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -10,8 +11,6 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
-  final WeatherFactory wf = new WeatherFactory(openWeatherAPI);
-
   @override
   void initState() {
     super.initState();
@@ -19,14 +18,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   Future<void> _getData() async {
-    await LocationHelper.instance.updateCurrentPisiton();
-    Weather weather = await wf.currentWeatherByLocation(
-        LocationHelper.instance.currentPosition.latitude,
-        LocationHelper.instance.currentPosition.longitude);
-    print(weather.areaName);
-    print(weather.temperature.celsius);
-    print(weather.tempFeelsLike.celsius);
-    print(weather.humidity);
+    await CurrentWeather.instance.updateWeatherByPosition();
+
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -37,7 +30,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -73,7 +66,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
                 SizedBox(
                   height: 20.0,
                 ),
-                CircularProgressIndicator(),
+                //CircularProgressIndicator(),
               ],
             ),
           ],

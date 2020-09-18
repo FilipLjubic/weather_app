@@ -8,12 +8,12 @@ import 'constants.dart';
 
 // Singleton class
 class LocationHelper {
-  LocationHelper._privateConstructor();
   Timer _timer;
   String previousQuery = "";
   Position currentPosition;
 
   static final _instance = LocationHelper._privateConstructor();
+  LocationHelper._privateConstructor();
 
   static LocationHelper get instance => _instance;
 

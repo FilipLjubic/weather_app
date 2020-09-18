@@ -32,19 +32,15 @@ class _HomeState extends State<Home> {
           resizeToAvoidBottomInset: false,
           body: Stack(
             children: [
-              // image container
               Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    // change with image you get from api (probably networkimage huh)
                     image:
                         NetworkImage(PhotoHelper.instance.photo.largeImageUrl),
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
-
-              // floating search bar
               FloatingSearchBar(
                 onTap: () async {
                   hintText = await Navigator.push(
@@ -71,7 +67,6 @@ class _HomeState extends State<Home> {
                   });
                 },
               ),
-
               DraggableScrollableSheet(
                 maxChildSize: 0.6,
                 minChildSize: 0.25,
