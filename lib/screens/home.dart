@@ -3,6 +3,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:weather_app/screens/search.dart';
 import 'package:weather_app/utils/constants.dart';
+import 'package:weather_app/utils/cur_weather.dart';
 import 'package:weather_app/utils/photo_helper.dart';
 import 'package:weather_app/widgets/current_weather_card.dart';
 import 'package:weather_app/widgets/floating_search_bar.dart';
@@ -55,10 +56,17 @@ class _HomeState extends State<Home> {
                 },
                 hintText: hintText,
                 onPressedIcon: () async {
-                  if (hintText == null) return;
                   setState(() {
                     _loading = true;
                   });
+                  if (hintText == null) {
+                    await CurrentWeather.instance.updateWeatherByPosition();
+
+                    setState(() {
+                      _loading = false;
+                    });
+                    return;
+                  }
 
                   await PhotoHelper.instance.getPhoto(hintText);
 

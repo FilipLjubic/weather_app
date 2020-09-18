@@ -23,7 +23,7 @@ class IconsRow extends StatelessWidget {
             ),
           ),
           property: Text(
-            "${CurrentWeather.instance.wind} km/h",
+            "${CurrentWeather.instance.weather.windSpeed.round()} km/h",
             style: TextStyle(
               color: Colors.black45,
               fontFamily: "Montserrat",
@@ -44,7 +44,7 @@ class IconsRow extends StatelessWidget {
             ),
           ),
           property: Text(
-            "${CurrentWeather.instance.humidity} %",
+            "${CurrentWeather.instance.weather.humidity.round()} %",
             style: TextStyle(
               color: Colors.black45,
               fontFamily: "Montserrat",
@@ -65,7 +65,7 @@ class IconsRow extends StatelessWidget {
             ),
           ),
           property: Text(
-            "${CurrentWeather.instance.rain} mm",
+            "${CurrentWeather.instance.weather.rainLast3Hours.round()} mm",
             style: TextStyle(
               color: Colors.black45,
               fontFamily: "Montserrat",
@@ -117,7 +117,9 @@ class _UpperCardRowState extends State<UpperCardRow> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             NumberSlideAnimation(
-              number: CurrentWeather.instance.temperature.toString(),
+              number: CurrentWeather.instance.weather.temperature.celsius
+                  .round()
+                  .toString(),
               textStyle: TextStyle(
                 fontSize: 50.0,
                 color: Colors.black87,
@@ -137,7 +139,7 @@ class _UpperCardRowState extends State<UpperCardRow> {
           ],
         ),
         Text(
-          CurrentWeather.instance.weatherDescription,
+          CurrentWeather.instance.weather.weatherMain,
           style: TextStyle(
               fontSize: 22.0,
               fontWeight: FontWeight.bold,
@@ -155,7 +157,7 @@ class MiddleCardRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Text(
-          "Min: ${CurrentWeather.instance.minTemperature}°",
+          "Min: ${CurrentWeather.instance.weather.tempMin.celsius.round()}°",
           style: TextStyle(
             fontFamily: "Montserrat",
           ),
@@ -168,7 +170,7 @@ class MiddleCardRow extends StatelessWidget {
           child: Image.network(CurrentWeather.instance.weatherIconURL),
         ),
         Text(
-          "Max: ${CurrentWeather.instance.maxTemperature}°",
+          "Max: ${CurrentWeather.instance.weather.tempMax.celsius.round()}°",
           style: TextStyle(
             fontFamily: "Montserrat",
           ),
