@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:number_slide_animation/number_slide_animation_widget.dart';
+import 'package:weather_app/utils/cur_weather.dart';
 import 'package:weather_app/widgets/current_time.dart';
 import 'package:weather_app/widgets/round_property_icon.dart';
 import 'package:weather_icons/weather_icons.dart';
@@ -22,7 +23,7 @@ class IconsRow extends StatelessWidget {
             ),
           ),
           property: Text(
-            "4 km/h",
+            "${CurrentWeather.instance.wind} km/h",
             style: TextStyle(
               color: Colors.black45,
               fontFamily: "Montserrat",
@@ -43,7 +44,7 @@ class IconsRow extends StatelessWidget {
             ),
           ),
           property: Text(
-            "43 %",
+            "${CurrentWeather.instance.humidity} %",
             style: TextStyle(
               color: Colors.black45,
               fontFamily: "Montserrat",
@@ -64,7 +65,7 @@ class IconsRow extends StatelessWidget {
             ),
           ),
           property: Text(
-            "16 %",
+            "${CurrentWeather.instance.rain} mm",
             style: TextStyle(
               color: Colors.black45,
               fontFamily: "Montserrat",
@@ -116,7 +117,7 @@ class _UpperCardRowState extends State<UpperCardRow> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             NumberSlideAnimation(
-              number: '21',
+              number: CurrentWeather.instance.temperature.toString(),
               textStyle: TextStyle(
                 fontSize: 50.0,
                 color: Colors.black87,
@@ -136,7 +137,7 @@ class _UpperCardRowState extends State<UpperCardRow> {
           ],
         ),
         Text(
-          "Sunny",
+          CurrentWeather.instance.weatherDescription,
           style: TextStyle(
               fontSize: 22.0,
               fontWeight: FontWeight.bold,
@@ -154,24 +155,20 @@ class MiddleCardRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Text(
-          "Min: 20°",
+          "Min: ${CurrentWeather.instance.minTemperature}°",
           style: TextStyle(
             fontFamily: "Montserrat",
           ),
         ),
         Container(
-          padding: const EdgeInsets.all(6.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.0),
-            color: Colors.grey[100],
+            color: Colors.lime[50],
           ),
-          child: Icon(
-            Icons.wb_sunny,
-            size: 25.0,
-          ),
+          child: Image.network(CurrentWeather.instance.weatherIconURL),
         ),
         Text(
-          "Max: 30°",
+          "Max: ${CurrentWeather.instance.maxTemperature}°",
           style: TextStyle(
             fontFamily: "Montserrat",
           ),
