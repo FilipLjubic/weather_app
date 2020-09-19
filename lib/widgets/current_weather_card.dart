@@ -7,7 +7,7 @@ class CurrentWeatherCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 2.0,
+      elevation: 3.0,
       shadowColor: Colors.black45,
       margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
       child: Padding(

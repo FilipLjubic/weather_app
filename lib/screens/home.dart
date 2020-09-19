@@ -1,5 +1,6 @@
 import 'package:date_time_format/date_time_format.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:weather_app/screens/search.dart';
@@ -12,6 +13,7 @@ import 'package:weather_app/widgets/hourly_forecast_card.dart';
 
 /// TODO:
 ///       - add animations - staggered animations na horizontalni list view
+///                        - add transition to loading screen
 ///
 ///           - napravit da ne moze biti u landscape modeu
 
@@ -82,7 +84,7 @@ class _HomeState extends State<Home> {
               DraggableScrollableSheet(
                 maxChildSize: 0.6,
                 minChildSize: 0.15,
-                initialChildSize: 0.3,
+                initialChildSize: 0.6,
                 builder: (context, scrollController) => Container(
                   decoration: draggableScrollableSheetDecoration,
                   child: ListView(
@@ -116,18 +118,31 @@ class _HomeState extends State<Home> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10.0, vertical: 5.0),
                         margin: const EdgeInsets.all(10.0),
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: CurrentWeather.instance.forecast.length,
-                          itemBuilder: (context, index) => HourlyForecastCard(
-                            time: DateTimeFormat.format(
-                                CurrentWeather.instance.forecast[index].date,
-                                format: 'H:i'),
-                            temperature: CurrentWeather
-                                .instance.forecast[index].temperature.celsius
-                                .round(),
-                            icon: CurrentWeather
-                                .instance.forecast[index].weatherIcon,
+                        child: AnimationLimiter(
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: CurrentWeather.instance.forecast.length,
+                            itemBuilder: (context, index) =>
+                                AnimationConfiguration.staggeredList(
+                              position: index,
+                              duration: const Duration(milliseconds: 1000),
+                              child: SlideAnimation(
+                                verticalOffset: 50.0,
+                                child: FadeInAnimation(
+                                  child: HourlyForecastCard(
+                                    time: DateTimeFormat.format(
+                                        CurrentWeather
+                                            .instance.forecast[index].date,
+                                        format: 'H:i'),
+                                    temperature: CurrentWeather.instance
+                                        .forecast[index].temperature.celsius
+                                        .round(),
+                                    icon: CurrentWeather
+                                        .instance.forecast[index].weatherIcon,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),

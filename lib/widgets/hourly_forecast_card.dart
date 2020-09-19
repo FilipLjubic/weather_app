@@ -17,7 +17,7 @@ class HourlyForecastCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Colors.white,
-      elevation: 1.0,
+      elevation: 2.0,
       shadowColor: Colors.black45,
       child: Container(
         margin: const EdgeInsets.only(left: 2.0),
