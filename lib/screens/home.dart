@@ -1,3 +1,4 @@
+import 'package:date_time_format/date_time_format.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:page_transition/page_transition.dart';
@@ -80,7 +81,7 @@ class _HomeState extends State<Home> {
               ),
               DraggableScrollableSheet(
                 maxChildSize: 0.6,
-                minChildSize: 0.25,
+                minChildSize: 0.15,
                 initialChildSize: 0.3,
                 builder: (context, scrollController) => Container(
                   decoration: draggableScrollableSheetDecoration,
@@ -100,7 +101,7 @@ class _HomeState extends State<Home> {
                       CurrentWeatherCard(),
                       Container(
                         margin: const EdgeInsets.only(left: 26.0),
-                        child: Text(
+                        child: const Text(
                           "TODAY",
                           style: TextStyle(
                             color: Colors.black26,
@@ -115,16 +116,19 @@ class _HomeState extends State<Home> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10.0, vertical: 5.0),
                         margin: const EdgeInsets.all(10.0),
-                        child: ListView(
+                        child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          children: [
-                            HourlyForecastCard(
-                              time: "11:00",
-                              temperature: 20,
-                              icon: CurrentWeather
-                                  .instance.forecast[0].weatherIcon,
-                            ),
-                          ],
+                          itemCount: CurrentWeather.instance.forecast.length,
+                          itemBuilder: (context, index) => HourlyForecastCard(
+                            time: DateTimeFormat.format(
+                                CurrentWeather.instance.forecast[index].date,
+                                format: 'H:i'),
+                            temperature: CurrentWeather
+                                .instance.forecast[index].temperature.celsius
+                                .round(),
+                            icon: CurrentWeather
+                                .instance.forecast[index].weatherIcon,
+                          ),
                         ),
                       ),
                     ],

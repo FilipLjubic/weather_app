@@ -60,6 +60,4 @@ class LocationHelper {
       });
     }
   }
-
-  // retrieve location details when user selects a suggestion using look-up by Id
 }
