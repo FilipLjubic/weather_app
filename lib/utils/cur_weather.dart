@@ -11,6 +11,10 @@ class CurrentWeather {
   String weatherIconURL;
   List<Weather> forecast;
 
+  static String createIconURL(String icon) {
+    return "http://openweathermap.org/img/wn/$icon.png";
+  }
+
   static CurrentWeather get instance => _instance;
 
   Future<void> updateWeatherByPosition() async {
@@ -20,8 +24,7 @@ class CurrentWeather {
         LocationHelper.instance.currentPosition.latitude,
         LocationHelper.instance.currentPosition.longitude);
 
-    weatherIconURL =
-        "http://openweathermap.org/img/wn/${weather.weatherIcon}.png";
+    weatherIconURL = createIconURL(weather.weatherIcon);
 
     forecast = await wf.fiveDayForecastByLocation(
         LocationHelper.instance.currentPosition.latitude,

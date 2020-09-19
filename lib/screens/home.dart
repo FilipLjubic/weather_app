@@ -8,7 +8,6 @@ import 'package:weather_app/utils/photo_helper.dart';
 import 'package:weather_app/widgets/current_weather_card.dart';
 import 'package:weather_app/widgets/floating_search_bar.dart';
 import 'package:weather_app/widgets/hourly_forecast_card.dart';
-import 'package:weather_icons/weather_icons.dart';
 
 /// TODO:
 ///       - add animations - staggered animations na horizontalni list view
@@ -23,6 +22,38 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   String hintText;
   bool _loading = false;
+
+  void _tapSearchBar() async {
+    hintText = await Navigator.push(
+      context,
+      PageTransition(
+        type: PageTransitionType.fade,
+        child: SearchScreen(),
+      ),
+    );
+
+    setState(() {});
+  }
+
+  void _refresh() async {
+    setState(() {
+      _loading = true;
+    });
+    if (hintText == null) {
+      await CurrentWeather.instance.updateWeatherByPosition();
+
+      setState(() {
+        _loading = false;
+      });
+      return;
+    }
+
+    await PhotoHelper.instance.getPhoto(hintText);
+
+    setState(() {
+      _loading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,37 +74,9 @@ class _HomeState extends State<Home> {
                 ),
               ),
               FloatingSearchBar(
-                onTap: () async {
-                  hintText = await Navigator.push(
-                    context,
-                    PageTransition(
-                      type: PageTransitionType.fade,
-                      child: SearchScreen(),
-                    ),
-                  );
-
-                  setState(() {});
-                },
+                onTap: _tapSearchBar,
                 hintText: hintText,
-                onPressedIcon: () async {
-                  setState(() {
-                    _loading = true;
-                  });
-                  if (hintText == null) {
-                    await CurrentWeather.instance.updateWeatherByPosition();
-
-                    setState(() {
-                      _loading = false;
-                    });
-                    return;
-                  }
-
-                  await PhotoHelper.instance.getPhoto(hintText);
-
-                  setState(() {
-                    _loading = false;
-                  });
-                },
+                onPressedIcon: _refresh,
               ),
               DraggableScrollableSheet(
                 maxChildSize: 0.6,
@@ -118,7 +121,8 @@ class _HomeState extends State<Home> {
                             HourlyForecastCard(
                               time: "11:00",
                               temperature: 20,
-                              icon: WeatherIcons.day_sunny_overcast,
+                              icon: CurrentWeather
+                                  .instance.forecast[0].weatherIcon,
                             ),
                           ],
                         ),

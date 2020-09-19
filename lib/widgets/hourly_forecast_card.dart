@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather_icons/weather_icons.dart';
+import 'package:weather_app/utils/cur_weather.dart';
 
 class HourlyForecastCard extends StatelessWidget {
   const HourlyForecastCard({
@@ -9,7 +9,7 @@ class HourlyForecastCard extends StatelessWidget {
     @required this.temperature,
   }) : super(key: key);
 
-  final IconData icon;
+  final String icon;
   final String time;
   final int temperature;
 
@@ -29,7 +29,10 @@ class HourlyForecastCard extends StatelessWidget {
             const SizedBox(
               height: 10.0,
             ),
-            BoxedIcon(icon),
+            Image.network(
+              CurrentWeather.createIconURL(icon),
+              height: 30.0,
+            ),
             const SizedBox(
               height: 10.0,
             ),

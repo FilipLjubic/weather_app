@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/screens/home.dart';
 import 'package:weather_app/utils/cur_weather.dart';
 
-// TODO:
-//       create singleton for weather
-
 class LoadingScreen extends StatefulWidget {
   @override
   _LoadingScreenState createState() => _LoadingScreenState();
@@ -19,7 +16,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   Future<void> _getData() async {
     await CurrentWeather.instance.updateWeatherByPosition();
-
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
