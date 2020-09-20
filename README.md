@@ -1,20 +1,37 @@
-# Weather App ☁
+# Weatheroo ☁
 
-## My Goal
+## Stuff I learned in this project
 
-Learning about asynchronous programming in Dart.
-How to carry out time consuming tasks such as getting device location and networking to get data from the internet. 
+- calling different APIs and using them how I see fit
+- state management is hard
+- how to implement autocomplete with a naive approach
+- debouncing
+- implementing microphone listener
+- why it's important to separate logic from UI
+- it isn't good to rely on too many APIs
+- how to use stacks and draggable scrollable sheets
+- use const whenever a widget doesn't have to be rebuilt
+- using singletons to store data (*bad practice*)
 
 
-## What I will create
+## What the application does
 
-I'm going to make a weather app inspired by the beautiful designs made by [Angelina Skiba](https://dribbble.com/Bebachka_a) and [Mahdi Hajinejad](https://dribbble.com/shots/11113434-Weather-App).
+It's a very basic app that either shows the weather of your current position or the one you search for. The goal was to be as simple as possible with pleasant UX. 
+
+## What I would do differently if I did it again
+
+- use Provider for state management
+- find a list of all cities and countries for autocomplete implementation instead of using an API
+- worry less about design choices and more about implementing important features first
+- worry more about responsiveness
+- use theme for default textstyle and such
+- start refactoring sooner
+- use SQLite for database (or even shared preferences in this case)
 
 
-## Figma of screens
-![Figma of first screen](https://github.com/FilipLjubic/weather_app/blob/master/images/figma1.png)
-![Figma of second screen](https://github.com/FilipLjubic/weather_app/blob/master/images/figma2.png)
-
+## Initial screens in figma
+![First screen](https://github.com/FilipLjubic/weather_app/blob/master/images/figma1.png)
+![Second screen (decided not to implement)](https://github.com/FilipLjubic/weather_app/blob/master/images/figma2.png)
 
 
 
