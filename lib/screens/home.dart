@@ -11,10 +11,6 @@ import 'package:weather_app/widgets/current_weather_card.dart';
 import 'package:weather_app/widgets/floating_search_bar.dart';
 import 'package:weather_app/widgets/hourly_forecast_card.dart';
 
-/// TODO:     - napravit da ne moze biti u landscape modeu
-///           - updateat weather data kada se searcha novi grad
-///           - updateat README.md
-
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();

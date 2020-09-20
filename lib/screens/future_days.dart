@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:weather_icons/weather_icons.dart';
 
+// DECIDED TO NOT IMPLEMENT THIS PART ! :/
+
 /// TODO: - change font of tomorrow weather container and appbar
 ///       - add elipses on 2 edges
 ///       - make 7 text column into cards or give them elevation
