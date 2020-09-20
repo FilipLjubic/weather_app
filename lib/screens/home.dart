@@ -11,11 +11,8 @@ import 'package:weather_app/widgets/current_weather_card.dart';
 import 'package:weather_app/widgets/floating_search_bar.dart';
 import 'package:weather_app/widgets/hourly_forecast_card.dart';
 
-/// TODO:
-///       - add animations - staggered animations na horizontalni list view
-///                        - add transition to loading screen
-///
-///           - napravit da ne moze biti u landscape modeu
+/// TODO:     - napravit da ne moze biti u landscape modeu
+///           - updateat weather data kada se searcha novi grad
 
 class Home extends StatefulWidget {
   @override
@@ -83,8 +80,8 @@ class _HomeState extends State<Home> {
               ),
               DraggableScrollableSheet(
                 maxChildSize: 0.6,
-                minChildSize: 0.15,
-                initialChildSize: 0.6,
+                minChildSize: 0.24,
+                initialChildSize: 0.3,
                 builder: (context, scrollController) => Container(
                   decoration: draggableScrollableSheetDecoration,
                   child: ListView(
@@ -104,7 +101,7 @@ class _HomeState extends State<Home> {
                       Container(
                         margin: const EdgeInsets.only(left: 26.0),
                         child: const Text(
-                          "TODAY",
+                          "FORECAST",
                           style: TextStyle(
                             color: Colors.black26,
                             fontSize: 16.0,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:weather_app/screens/home.dart';
 import 'package:weather_app/utils/cur_weather.dart';
 
@@ -17,10 +18,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
   Future<void> _getData() async {
     await CurrentWeather.instance.updateWeatherByPosition();
     Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) => Home(),
-        ));
+      context,
+      PageTransition(
+        type: PageTransitionType.fade,
+        child: Home(),
+      ),
+    );
   }
 
   @override
