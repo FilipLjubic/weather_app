@@ -28,8 +28,12 @@ It's a very basic app that either shows the weather of your current position or 
 - start refactoring sooner
 - use SQLite for database (or even shared preferences in this case)
 
+## End product
 
-## Initial screens in figma
+![End product gif](https://media0.giphy.com/media/lTL3pTK8BTWdoYjHQZ/giphy.gif)
+
+
+## Initial screens in Figma
 ![First screen](https://github.com/FilipLjubic/weather_app/blob/master/images/figma1.png)
 ![Second screen (decided not to implement)](https://github.com/FilipLjubic/weather_app/blob/master/images/figma2.png)
 
