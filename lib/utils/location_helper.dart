@@ -33,6 +33,7 @@ class LocationHelper {
       List<dynamic> responseList = json.decode(response.body)['suggestions'];
 
       return responseList
+          .where((element) => element != null)
           .map((response) => Suggestion.fromJson(response))
           .distinct((x) => x.country)
           .toList();

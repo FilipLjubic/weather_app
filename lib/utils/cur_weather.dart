@@ -30,4 +30,19 @@ class CurrentWeather {
         LocationHelper.instance.currentPosition.latitude,
         LocationHelper.instance.currentPosition.longitude);
   }
+
+  Future<void> updateWeatherByCityName(String cityName) async {
+    try {
+      this.weather = await wf.currentWeatherByCityName(cityName);
+
+      print(CurrentWeather.instance.weather.temperature.celsius
+          .round()
+          .toString());
+      this.weatherIconURL = createIconURL(weather.weatherIcon);
+
+      this.forecast = await wf.fiveDayForecastByCityName(cityName);
+    } catch (e) {
+      await updateWeatherByPosition();
+    }
+  }
 }

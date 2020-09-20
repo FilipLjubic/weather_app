@@ -3,6 +3,9 @@ import 'package:weather_app/utils/constants.dart';
 
 class CurrentWeatherCard extends StatelessWidget {
   final DateTime currentTime = DateTime.now();
+  final String temperature;
+
+  CurrentWeatherCard({this.temperature});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +17,7 @@ class CurrentWeatherCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 15.0),
         child: Column(
           children: [
-            UpperCardRow(),
+            UpperCardRow(number: temperature),
             Divider(
               endIndent: MediaQuery.of(context).size.width / 10,
               indent: MediaQuery.of(context).size.width / 10,

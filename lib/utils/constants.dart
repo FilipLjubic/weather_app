@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:number_slide_animation/number_slide_animation_widget.dart';
 import 'package:weather_app/utils/cur_weather.dart';
 import 'package:weather_app/widgets/current_time.dart';
 import 'package:weather_app/widgets/round_property_icon.dart';
@@ -82,6 +81,9 @@ class IconsRow extends StatelessWidget {
 }
 
 class UpperCardRow extends StatefulWidget {
+  final String number;
+  UpperCardRow({this.number});
+
   @override
   _UpperCardRowState createState() => _UpperCardRowState();
 }
@@ -116,17 +118,13 @@ class _UpperCardRowState extends State<UpperCardRow> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            NumberSlideAnimation(
-              number: CurrentWeather.instance.weather.temperature.celsius
-                  .round()
-                  .toString(),
-              textStyle: TextStyle(
+            Text(
+              widget.number,
+              style: TextStyle(
                 fontSize: 50.0,
                 color: Colors.black87,
                 fontFamily: "Montserrat",
               ),
-              duration: const Duration(milliseconds: 1500),
-              curve: Curves.bounceIn,
             ),
             Text(
               "°C",

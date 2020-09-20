@@ -4,6 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:weather_app/models/suggestion.dart';
 import 'package:weather_app/utils/constants.dart';
+import 'package:weather_app/utils/cur_weather.dart';
 import 'package:weather_app/utils/location_helper.dart';
 import 'package:weather_app/utils/photo_helper.dart';
 import 'package:weather_app/widgets/marginalized_progress_indicator.dart';
@@ -81,6 +82,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       });
 
                       await PhotoHelper.instance.getPhoto(value);
+                      await CurrentWeather.instance
+                          .updateWeatherByCityName(value);
                       setState(() {
                         _loading = false;
                       });
@@ -171,6 +174,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                   await PhotoHelper.instance.getPhoto(
                                       snapshot.data[index].city ??
                                           snapshot.data[index].country);
+                                  await CurrentWeather.instance
+                                      .updateWeatherByCityName(cityName);
 
                                   setState(() {
                                     _loading = false;

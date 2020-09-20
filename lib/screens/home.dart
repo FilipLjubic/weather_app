@@ -13,6 +13,7 @@ import 'package:weather_app/widgets/hourly_forecast_card.dart';
 
 /// TODO:     - napravit da ne moze biti u landscape modeu
 ///           - updateat weather data kada se searcha novi grad
+///           - updateat README.md
 
 class Home extends StatefulWidget {
   @override
@@ -49,6 +50,8 @@ class _HomeState extends State<Home> {
     }
 
     await PhotoHelper.instance.getPhoto(hintText);
+
+    await CurrentWeather.instance.updateWeatherByCityName(hintText);
 
     setState(() {
       _loading = false;
@@ -97,7 +100,12 @@ class _HomeState extends State<Home> {
                         indent: MediaQuery.of(context).size.width / 3,
                         color: Colors.black12,
                       ),
-                      CurrentWeatherCard(),
+                      CurrentWeatherCard(
+                        temperature: CurrentWeather
+                            .instance.weather.temperature.celsius
+                            .round()
+                            .toString(),
+                      ),
                       Container(
                         margin: const EdgeInsets.only(left: 26.0),
                         child: const Text(
